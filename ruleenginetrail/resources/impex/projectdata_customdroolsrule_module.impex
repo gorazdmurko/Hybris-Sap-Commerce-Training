@@ -1,0 +1,43 @@
+
+# KIE - ? Knowledge Is Everything ? - also used for the shared aspects of the system; such as the unified build, deploy and utilization
+
+# A KieModule is a container of all the resources necessary to define a set of KieBases.
+# DroolsKIEModule is the SAP Commerce representation of the KieModule.
+INSERT_UPDATE DroolsKIEModule;name[unique=true];mvnGroupId;mvnArtifactId;mvnVersion;ruleType(code);active;version;
+                             ;customdroolsrule-module;hybris-rules;customdroolsrule;1.0.0;CUSTOMDROOLSRULE;true;-1;
+                             ;customdroolsrule-preview-module;hybris-rules;customdroolsrule-preview;1.0.0;CUSTOMDROOLSRULE;true;-1;
+
+# The KieBase is a repository of all the application's knowledge definitions. It CONTAINS rules, processes, functions, type models.
+# DroolsKIEBase is the SAP Commerce representation of the KieBase.
+INSERT_UPDATE DroolsKIEBase;name[unique=true];kieModule(name)[unique=true];equalityBehavior(code);eventProcessingMode(code)
+                           ;customdroolsrule-base;customdroolsrule-module;EQUALITY;STREAM
+                           ;customdroolsrule-preview-base;customdroolsrule-preview-module;EQUALITY;STREAM
+
+# KieSession is the most common way to interact with the engine. A KieSession allows the application to establish a conversation
+#   with the engine and evaluate facts, a cart, with respect to previously defined rules such as promotions.
+# Drools and SAP Commerce both support STATELESS and STATEFUL session types.
+# DroolsKIESession is the SAP Commerce representation of the KieSession.
+INSERT_UPDATE DroolsKIESession;name[unique=true];kieBase(name)[unique=true];sessionType(code)
+                              ;customdroolsrule-session;customdroolsrule-base;STATEFUL
+                              ;customdroolsrule-preview-session;customdroolsrule-preview-base;STATEFUL
+
+# The DroolsRuleEngineContext will be provided by the calling application as input to the RuleEngineService. This context
+#   stores the information in which DroolsKIESession the rule evaluation should be done.
+# The DroolsKIESession has a reference to a DroolsKIEBase which is linked to a DroolsKIEModule. By providing different contexts,
+#   the application can control which rule set in which the KIEBase should be used.
+INSERT_UPDATE DroolsRuleEngineContext;name[unique=true];kieSession(name);ruleFiringLimit
+                                     ;customdroolsrule-context;customdroolsrule-session;200;
+                                     ;customdroolsrule-preview-context;customdroolsrule-preview-session;200;
+
+UPDATE DroolsKIEModule;name[unique=true];defaultKIEBase(name)
+                      ;customdroolsrule-module;customdroolsrule-base
+                      ;customdroolsrule-preview-module;customdroolsrule-preview-base
+
+UPDATE DroolsKIEBase;name[unique=true];defaultKIESession(name)
+                    ;customdroolsrule-base;customdroolsrule-session
+                    ;customdroolsrule-preview-base;customdroolsrule-preview-session
+
+
+# allow synchronization from the customdroolsrule-preview-module to the customdroolsrule-module, but not the other way around
+UPDATE DroolsKIEModule;name[unique=true];allowedTargets(name)
+                      ;customdroolsrule-preview-module;customdroolsrule-module

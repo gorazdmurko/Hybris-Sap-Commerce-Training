@@ -1,0 +1,31 @@
+## messageSource=classpath:/yacceleratorcore/messages/email-orderCancelled_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+    <head></head>
+    <body bgcolor="#ffffff">
+
+    Congratulations, ${ctx.displayName}!
+
+    <div>
+
+        You are eligible for premium Membership.
+        Since your cart value is above 300, complete your order and get the premium benefits.
+
+        Regards
+        Training Storefront Website Team
+    </div>
+
+    </body>
+</html>

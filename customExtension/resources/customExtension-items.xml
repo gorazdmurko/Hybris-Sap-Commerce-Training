@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<itemtype code="AbstractPerson"
+				  autocreate="true" generate="true"
+				  extends="GenericItem">
+			<deployment table="abstractPerson" typecode="10840" />
+			<custom-properties>
+				<property name="legacyPersistence">
+					<value>java.lang.Boolean.TRUE</value>
+				</property>
+			</custom-properties>
+			<attributes>
+				<attribute qualifier="id" type="java.lang.Integer">
+					<description>Unique id</description>
+					<modifiers unique="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="username" type="java.lang.String">
+					<description>Person's username</description>
+					<modifiers unique="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="password" type="java.lang.String">
+					<description>Persons password</description>
+					<modifiers unique="true" encrypted="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Person"
+				  extends="AbstractPerson"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.customExtension.jalo.Person">
+			<attributes>
+				<attribute qualifier="address" type="java.lang.String">
+					<description>Address</description>
+					<modifiers read="true" write="true" search="true" removable="true" optional="true" partof="false"/>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<itemtype code="MyEmployee"
+				  autocreate="true"
+				  generate="true"
+				  extends="Person"
+				  jaloclass="de.hybris.platform.customExtension.jalo.MyEmployee">
+			<attributes>
+				<attribute qualifier="department" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="MyProduct" autocreate="true" generate="true"
+		   extends="Product"
+		   jaloclass="de.hybris.platform.customExtension.jalo.MyProduct">
+			<attributes>
+				<attribute qualifier="id" type="java.lang.Integer">
+					<modifiers unique="true" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="productName" type="java.lang.String">
+					<description>My Example Initial String Value</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="inStock" type="java.lang.Boolean">
+					<description>Example Initial Boolean Field</description>
+					<defaultvalue>true</defaultvalue>
+               		<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

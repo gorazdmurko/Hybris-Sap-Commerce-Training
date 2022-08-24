@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testclasses><testingdao><testclass>de.hybris.platform.testingdao.jalo.TestingdaoTest</testclass><testclass>de.hybris.platform.testingdao.service.impl.DefaultTestingdaoServiceIntegrationTest</testclass></testingdao></testclasses>

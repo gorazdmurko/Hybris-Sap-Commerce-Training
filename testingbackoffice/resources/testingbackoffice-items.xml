@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+
+	<!--
+			EXPLORER TREE	~~
+			create 3 new item types to add them into custom EXPLORER TREE (TrainingTree)
+	-->
+	<itemtypes>
+		<!-- create table CustomTrainingTree & add attributes code, subject and attachment -->
+		<itemtype generate="true"
+				  code="CustomTrainingTree"
+				  jaloclass="de.hybris.platform.backoffice.jalo.CustomTrainingTree"
+				  autocreate="true">
+			<deployment table="CustomTrainingTree" typecode="10172" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<description>Custom training tree code</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="subject" type="java.lang.String">
+					<description>Custom training tree subject</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="attachment" type="Media">
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- extend Product to create CustomProduct table with 3 more attributes -->
+		<itemtype generate="true"
+		   code="CustomProduct"
+		   jaloclass="de.hybris.platform.backoffice.jalo.CustomProduct"
+		   extends="Product"
+		   autocreate="true">
+			<attributes>
+				<attribute qualifier="deadline" type="java.lang.String">
+					<description>My Example Initial String Value</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="inStock" type="java.lang.Boolean">
+					<description>Example Initial Boolean Field</description>
+					<modifiers initial="true" optional="false" />
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="media" type="Media">
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- just add 3 more properties to the Product table -->
+		<itemtype
+				code="Product"
+				autocreate="false" generate="false">				<!-- false ~~ 'cause Product already exists -->
+			<attributes>
+				<attribute qualifier="productCustomerFeedback" type="java.lang.String">
+					<description>Feedback</description>
+					<modifiers />
+					<persistence type="property" />		<!-- this column is created in DB after performing system update  -->
+				</attribute>
+				<attribute qualifier="productPackagingQuality" type="java.lang.String">
+					<description>Quality</description>
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="productContents" type="java.lang.String">
+					<description>Content</description>
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- Courses -->
+		<itemtype code="Courses"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.backoffice.jalo.Courses">
+			<deployment table="Courses" typecode="10128" />
+			<attributes>
+				<attribute qualifier="code" type="java.lang.String">
+					<description>Course Code</description>
+					<modifiers initial="true" optional="false" unique="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="name" type="java.lang.String">
+					<description>Course Name</description>
+<!--					<modifiers initial="true" optional="false" />-->
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="duration" type="java.lang.String">
+					<description>Course Duration</description>
+<!--					<modifiers initial="true" optional="false" />-->
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="description" type="java.lang.String">
+					<description>Description of available course</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="amount" type="java.lang.Integer">
+					<description>Amount of Courses</description>
+<!--					<modifiers initial="true" optional="false" />-->
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

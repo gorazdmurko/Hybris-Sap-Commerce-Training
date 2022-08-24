@@ -1,0 +1,29 @@
+## messageSource=classpath:/yacceleratorcore/messages/email-orderCancelled_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+    <head></head>
+    <body bgcolor="#ffffff">
+
+        Hey, ${ctx.displayName}!
+
+        <div>
+            Your cart can become a gold cart if you do a purchase of 200 pounds. once your cart becomes gold cart by adding cart total greater than 200 Pounds, you will get 80% discount on your gold cart.
+
+            Thanx and Regards,
+            Hybris Tube Sales Team
+        </div>
+
+    </body>
+</html>
