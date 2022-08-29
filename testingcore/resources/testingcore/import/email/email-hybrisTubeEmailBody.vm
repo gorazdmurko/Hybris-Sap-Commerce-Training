@@ -19,11 +19,178 @@
         Hey, ${ctx.displayName}!
 
         <div>
-            Your cart can become a gold cart if you do a purchase of 200 pounds. once your cart becomes gold cart by adding cart total greater than 200 Pounds, you will get 80% discount on your gold cart.
-
+            Your cart can become a gold cart if you do a purchase of 200 pounds. Once your cart becomes gold cart by adding cart total greater than 200 Pounds, you will get 80% discount on your gold cart.
+            <br />
             Thanx and Regards,
             Hybris Tube Sales Team
-        </div>
 
+            <hr />
+
+            <h5>Title: ${ctx.title}</h5>
+            <h5>Mail to: ${ctx.email}</h5>
+            <h5>Mail from: ${ctx.fromEmail}</h5>
+            <h5>Name: ${ctx.displayName}</h5>
+            <h5>Display name: ${ctx.fromDisplayName}</h5>
+            <h5>Language: ${ctx.email_language}</h5>
+            <h5>Date tool: ${ctx.dateTool}</h5>
+
+            <hr />
+
+            <h5>Customer: ${ctx.customerModel}</h5>
+            <h5>Customer id: ${ctx.customerModel.getCustomerID()}</h5>
+            <h5>Customer name: ${ctx.customerModel.getName()}</h5>
+            <h5>Customer tokens:</h5>
+            <div>
+                <ul>
+                    #foreach( $token in ${ctx.customerModel.getExternalToken()} )
+                        <li>
+                            <span>$token.getValue()</span>
+                        </li>
+                    #end
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <div>
+            <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F5F6">
+                <tbody>
+                <tr>
+                    <td width="100%" valign="top" align="center">
+                        <center>
+                            <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td align="center" height="100%" valign="top" width="100%">
+                                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:640px" bgcolor="#F2F5F6">
+                                            <tbody>
+                                            <tr>
+                                                <td height="5" style="font-size: 10px; line-height: 17px;">xxx</td>
+                                            </tr>
+                                            <tr>
+                                                <td height="5" style="font-size: 10px; line-height: 17px;">yyy</td>
+                                            </tr>
+                                            <tr>
+                                                <td bgcolor="#fff" width="640" height="60" valign="top">
+                                                    <div>
+                                                        <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+                                                            <tbody>
+                                                            <!-- header -->
+                                                            <div>Header</div>
+
+                                                            <!-- top content slot - intro components-->
+                                                            <div>Content Slot</div>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- content -->
+                                <tr>
+                                    <td align="center" height="100%" valign="top" width="100%">
+                                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:640px; background-color:#fff">
+                                            <tbody>
+                                            <tr>
+                                                <td height="40" style="font-size: 40px; line-height: 40px;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top" style="padding-left:20px;">
+                                                    <div class="recipe-content__recipe-info__xs-title">
+                                                        <p>
+                                                            <strong>Recipe content title</strong>
+                                                        </p>
+                                                    </div>
+                                                    <div class="recipe-content__recipe-info--unordered-list">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-12">
+                                                                <ul class="list">
+                                                                    <li>
+                                                                        <span attr="70">Recipe content list</span>
+                                                                        XXX
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
+                                            </tr>
+                                            <!-- Bottom content -->
+                                            <div>Bottom content</div>
+                                            <!-- footer -->
+                                            <div>Footer</div>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <img src="${ctx.parentContext.mediaBaseUrl}${ctx.media.url}" alt="${ctx.media.altText}" border="0"/>
+                        </center>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
+    <style>
+        body, table, td, a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        }
+
+        table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        }
+
+        img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+        }
+
+        table {
+        border-collapse: collapse !important;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        }
+
+        div[style*="margin: 16px 0;"] {
+        margin: 0 !important;
+        }
+
+        a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+        }
+    </style>
 </html>

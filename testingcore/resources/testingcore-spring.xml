@@ -41,7 +41,6 @@
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL PROCESS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- 1. HYBRIS TUBE -->
-
     <!-- a) PROCESS == give mapping of HybrisTubeEmailProcess file -->
     <bean id="hybrisTubeEmailProcessDefinitionResource"
           class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >   <!-- see ProcessDefinitionResource class -->
@@ -59,9 +58,7 @@
         <property name="businessProcessService" ref="businessProcessService"/>
     </bean>
 
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL PROCESS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- 2. TRAINING -->
-
     <!-- a) PROCESS mapping to TrainingEmailProcess -->
     <bean id="trainingEmailProcessDefinitionResource"
           class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">    <!-- see ProcessDefinitionResource class -->

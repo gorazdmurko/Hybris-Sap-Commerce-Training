@@ -14,14 +14,18 @@ import org.springframework.beans.factory.annotation.Required;
 
 public class HybrisTubeEmailContext extends AbstractEmailContext<HybrisTubeEmailProcessModel>
 {
-//	private Converter<UserModel, CustomerData> customerConverter;
-//	private CustomerData customerData;
+	// gets title, displayName, email, fromEmail, fromDisplayName, email_language & dateTool properties from parent
+
+	private Converter<UserModel, CustomerData> customerConverter;
+	public CustomerModel customerModel;
 
 	@Override
 	public void init(final HybrisTubeEmailProcessModel hybrisTubeEmailProcessModel, final EmailPageModel emailPageModel) {
 		super.init(hybrisTubeEmailProcessModel, emailPageModel);
 		put(EMAIL, getCustomerEmailResolutionService().getEmailForCustomer(getCustomer(hybrisTubeEmailProcessModel)));
 		put(DISPLAY_NAME, getCustomer(hybrisTubeEmailProcessModel).getDisplayName());
+
+		customerModel = getCustomer(hybrisTubeEmailProcessModel);
 	}
 
 	@Override
@@ -40,19 +44,19 @@ public class HybrisTubeEmailContext extends AbstractEmailContext<HybrisTubeEmail
 	}
 
 	// GETTERS & SETTERS
-//	public Converter<UserModel, CustomerData> getCustomerConverter() {
-//		return customerConverter;
-//	}
-//
-//	public void setCustomerConverter(Converter<UserModel, CustomerData> customerConverter) {
-//		this.customerConverter = customerConverter;
-//	}
-//
-//	public CustomerData getCustomerData() {
-//		return customerData;
-//	}
-//
-//	public void setCustomerData(CustomerData customerData) {
-//		this.customerData = customerData;
-//	}
+	public Converter<UserModel, CustomerData> getCustomerConverter() {
+		return customerConverter;
+	}
+
+	public void setCustomerConverter(Converter<UserModel, CustomerData> customerConverter) {
+		this.customerConverter = customerConverter;
+	}
+
+	public CustomerModel getCustomerModel() {
+		return customerModel;
+	}
+
+	public void setCustomerModel(CustomerModel customerModel) {
+		this.customerModel = customerModel;
+	}
 }

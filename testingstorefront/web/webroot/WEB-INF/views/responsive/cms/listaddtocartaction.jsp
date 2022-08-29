@@ -39,13 +39,16 @@
         </ycommerce:testId>
     </form:form>
 
-    <c:url value="/cart/send/mail" var="addToCartUrl"/>
-    <form:form id="sendMail" action="${addToCartUrl}" method="get">
-        <c:set var="sendMailButton" />
-        <button id="${sendMailButton}" type="submit">
-            <spring:theme text="Send Mail" />
-        </button>
-    </form:form>
+
+    <div style="margin-top: 1em">
+        <c:url value="/cart" var="cartUrl"/>
+        <form:form id="sendMail" action="${fn:escapeXml(cartUrl)}/send/mail" method="get">
+            <c:set var="sendMailButton" />
+            <button id="${sendMailButton}" type="submit">
+                <spring:theme text="Send Mail" />
+            </button>
+        </form:form>
+    </div>
 
     <!-- if item is CONFIGURABLE -->
     <form:form id="configureForm${fn:escapeXml(product.code)}" action="${configureProductUrl}" method="get" class="configure_form">

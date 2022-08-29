@@ -157,20 +157,14 @@ public class CartPageController extends AbstractCartPageController
 		if (!userFacade.isAnonymousUser()) {
 			final CartModel cartModel = cartService.getSessionCart();
 			if (cartModel.getTotalPrice() >= Double.valueOf(100)) {
-				// TRAINING EMAIL
-				eventService.publishEvent(initializeTrainingEvent(
-						new TrainingEmailEvent(cartModel, cartModel.getStore(),
-								cartModel.getSite(), cartModel.getCurrency()), cartModel));
-				// HYBRIS TUBE EMAIL
-				eventService.publishEvent(initializeEvent(
+
+				// HYBRIS TUBE EMAIL 1
+				eventService.publishEvent(initializeHybrisEvent(
 						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
 						cartModel.getSite(), cartModel.getCurrency()), cartModel));
-				eventService.publishEvent(initializeEvent(
+				// HYBRIS TUBE EMAIL 2
+				eventService.publishEvent(initializeHybrisEvent(
 						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
-						cartModel.getSite(), cartModel.getCurrency()), cartModel));
-				// TRAINING EMAIL
-				eventService.publishEvent(initializeTrainingEvent(
-						new TrainingEmailEvent(cartModel, cartModel.getStore(),
 						cartModel.getSite(), cartModel.getCurrency()), cartModel));
 			}
 		}
@@ -179,11 +173,9 @@ public class CartPageController extends AbstractCartPageController
 	}
 
 	@RequestMapping(value = "/send/mail", method = RequestMethod.GET)
-	public String showCartDirectly(final Model model1) throws CMSItemNotFoundException {
+	public String showCartDirectly(final Model model) throws CMSItemNotFoundException {
 
 		final CartModel cartModel = cartService.getSessionCart();
-
-
 		if (!userFacade.isAnonymousUser()) {
 			AbstractEvent event = initializeTrainingEvent(
 					new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency()), cartModel);
@@ -195,11 +187,11 @@ public class CartPageController extends AbstractCartPageController
 				new TrainingEmailEvent(cartModel, cartModel.getStore(),
 				cartModel.getSite(), cartModel.getCurrency()), cartModel));
 
-		return prepareCartUrl(model1);
+		return prepareCartUrl(model);
 	}
 
 
-	private AbstractEvent initializeEvent(final HybrisTubeEmailEvent hybrisTubeEmailEvent, final CartModel cartModel) {
+	private AbstractEvent initializeHybrisEvent(final HybrisTubeEmailEvent hybrisTubeEmailEvent, final CartModel cartModel) {
 
 		hybrisTubeEmailEvent.setCart(cartModel);
 		return hybrisTubeEmailEvent;
