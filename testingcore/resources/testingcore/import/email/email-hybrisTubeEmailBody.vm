@@ -15,6 +15,13 @@
 <html>
     <head></head>
     <body bgcolor="#ffffff">
+    <h1>============= X =============</h1>
+        <div>
+            <img src="https://dk.asko.com/medias/ASKO-warranty-quality-service.png?context=bWFzdGVyfHJvb3R8MjcyNTY3fGltYWdlL3BuZ3xoMTEvaGU3LzkwMDI5MzIwMTEwMzgvQVNLTy13YXJyYW50eS1xdWFsaXR5LXNlcnZpY2UucG5nfDM3ZjgxZGIwZTRkZmEzZjMyNzc3ZDNkMGM0NTZhM2NlMTJiZDZlM2RiNjQ3MGU3NzQzZjhjZDk4MDUyNDRhYzU"
+                 alt="No image" />
+        </div>
+
+        <br />
 
         Hey, ${ctx.displayName}!
 
@@ -22,35 +29,41 @@
             Your cart can become a gold cart if you do a purchase of 200 pounds. Once your cart becomes gold cart by adding cart total greater than 200 Pounds, you will get 80% discount on your gold cart.
             <br />
             Thanx and Regards,
-            Hybris Tube Sales Team
+            Hybris Tube Sales Team<br />
 
             <hr />
 
-            <h5>Title: ${ctx.title}</h5>
-            <h5>Mail to: ${ctx.email}</h5>
-            <h5>Mail from: ${ctx.fromEmail}</h5>
-            <h5>Name: ${ctx.displayName}</h5>
-            <h5>Display name: ${ctx.fromDisplayName}</h5>
-            <h5>Language: ${ctx.email_language}</h5>
-            <h5>Date tool: ${ctx.dateTool}</h5>
-
-            <hr />
-
-            <h5>Customer: ${ctx.customerModel}</h5>
-            <h5>Customer id: ${ctx.customerModel.getCustomerID()}</h5>
-            <h5>Customer name: ${ctx.customerModel.getName()}</h5>
-            <h5>Customer tokens:</h5>
-            <div>
-                <ul>
-                    #foreach( $token in ${ctx.customerModel.getExternalToken()} )
-                        <li>
-                            <span>$token.getValue()</span>
-                        </li>
-                    #end
-                </ul>
+            <div class="flexbox-container">
+                <div class="flexbox-item flex-item-1">
+                    <h5>Title: ${ctx.title}</h5>
+                    <h5>Mail to: ${ctx.email}</h5>
+                    <h5>Mail from: ${ctx.fromEmail}</h5>
+                    <h5>Name: ${ctx.displayName}</h5>
+                    <h5>${ctx.fromDisplayName}</h5>
+                    <h5>Language: ${ctx.email_language}</h5>
+                    <h5>Date: ${ctx.dateTool}</h5>
+                </div>
+                <div class="flexbox-item flex-item-2">
+                    <h5>Customer: ${ctx.customerData}</h5>
+                    <h5>Id: ${ctx.customerData.getCustomerId()}</h5>
+                    <h5>Avatar: ${ctx.customerData.getProfilePicture()}</h5>
+                    <h5>Customer: ${ctx.customerData.getTitle()} ${ctx.customerData.getFirstName()} ${ctx.customerData.getLastName()}</h5>
+                </div>
+                <div class="flexbox-item flex-item-3">
+                    <h5>Customer tokens:</h5>
+                    <ul>
+                        #foreach( $token in ${ctx.customerModel.getExternalToken()} )
+                            <li>
+                                <span>$token.getValue()</span>
+                            </li>
+                        #end
+                    </ul>
+                </div>
             </div>
         </div>
+
         <hr />
+
         <div>
             <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F5F6">
                 <tbody>
@@ -75,11 +88,14 @@
                                                         <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                                                             <tbody>
                                                             <!-- header -->
-                                                            <div>Header</div>
-
+                                                            <div>
+                                                                <div>Header</div>
+                                                                <div>${ctx.cmsSlotContents.Header}</div></div>
                                                             <!-- top content slot - intro components-->
-                                                            <div>Content Slot</div>
-
+                                                            <div>
+                                                                <div>Content Slot</div>
+                                                                <div>${ctx.cmsSlotContents.TopContent}</div>
+                                                            </div>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -122,9 +138,15 @@
                                                 <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
                                             </tr>
                                             <!-- Bottom content -->
-                                            <div>Bottom content</div>
+                                            <div>
+                                                <div>Bottom content</div>
+                                                ${ctx.cmsSlotContents.BottomContent}
+                                            </div>
                                             <!-- footer -->
-                                            <div>Footer</div>
+                                            <div>
+                                                <div>Footer</div>
+                                                ${ctx.cmsSlotContents.Footer}
+                                            </div>
                                             </tbody>
                                         </table>
                                     </td>
@@ -140,7 +162,12 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <img src="${ctx.parentContext.mediaBaseUrl}${ctx.media.url}" alt="${ctx.media.altText}" border="0"/>
+                            <div>
+                                <img src="${ctx.parentContext.mediaBaseUrl}${ctx.media.url}" alt="${ctx.media.altText}" border="0"/>
+                                <img src="https://dk.asko.com/medias/ASKO-warranty-quality-service.png?context=bWFzdGVyfHJvb3R8MjcyNTY3fGltYWdlL3BuZ3xoMTEvaGU3LzkwMDI5MzIwMTEwMzgvQVNLTy13YXJyYW50eS1xdWFsaXR5LXNlcnZpY2UucG5nfDM3ZjgxZGIwZTRkZmEzZjMyNzc3ZDNkMGM0NTZhM2NlMTJiZDZlM2RiNjQ3MGU3NzQzZjhjZDk4MDUyNDRhYzU"
+                                     alt="No image" />
+                            </div>
+##                            <img src="https://cdn.atag.nl/medias/Hero-Pasica-BestBuy-2000x1300-Extra-header-compress.jpg?context=bWFzdGVyfGltYWdlc3w5MTIxOXxpbWFnZS9qcGVnfGg5YS9oMTAvOTE3MzI5NzI2NjcxOC9IZXJvX1Bhc2ljYV9CZXN0QnV5XzIwMDB4MTMwMC1FeHRyYS1oZWFkZXItY29tcHJlc3MuanBnfGNkNTJkYTNjM2M0ZjU0NDZmYzliYzlmMjgzNDc4MmQ3MDZhZmY5YjJjN2JlYjdkNGQ1MDIzNzdkZWQyNTkzMTA" alt="No image" />
                         </center>
                     </td>
                 </tr>
@@ -150,47 +177,57 @@
     </body>
     <style>
         body, table, td, a {
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         table, td {
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
         }
 
         img {
-        border: 0;
-        height: auto;
-        line-height: 100%;
-        outline: none;
-        text-decoration: none;
-        -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
         }
 
         table {
-        border-collapse: collapse !important;
+            border-collapse: collapse !important;
         }
 
         body {
-        font-family: Arial, sans-serif;
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
+            font-family: Arial, sans-serif;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
         }
 
         div[style*="margin: 16px 0;"] {
-        margin: 0 !important;
+            margin: 0 !important;
         }
 
         a[x-apple-data-detectors] {
-        color: inherit !important;
-        text-decoration: none !important;
-        font-size: inherit !important;
-        font-family: inherit !important;
-        font-weight: inherit !important;
-        line-height: inherit !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        .flexbox-container {
+            display: flex;
+        }
+        .flexbox-item {
+            width: 20vw;
+            margin: 2vw;
+            border: 2px solid blue;
+            background: skyblue;
         }
     </style>
 </html>

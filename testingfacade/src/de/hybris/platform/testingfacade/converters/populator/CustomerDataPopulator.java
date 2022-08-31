@@ -33,7 +33,7 @@ public class CustomerDataPopulator implements Populator<CustomerModel, CustomerD
         target.setFirstName(name.get(0));
         target.setLastName(name.get(1));
 
-        // !! POPULATE EXTERNAL TOKENS
+        // !! POPULATE EXTERNAL TOKENS      ==>  populates list      ==>    .convertAll(sourceList, converter);
         target.setExternalTokens(new ArrayList<ExternalTokenData>(Converters.convertAll(source.getExternalToken(), getTokenDataConverter())));
 
     }

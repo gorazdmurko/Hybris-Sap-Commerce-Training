@@ -16,8 +16,9 @@ public class HybrisTubeEmailContext extends AbstractEmailContext<HybrisTubeEmail
 {
 	// gets title, displayName, email, fromEmail, fromDisplayName, email_language & dateTool properties from parent
 
+	private CustomerData customerData;
+	private CustomerModel customerModel;
 	private Converter<UserModel, CustomerData> customerConverter;
-	public CustomerModel customerModel;
 
 	@Override
 	public void init(final HybrisTubeEmailProcessModel hybrisTubeEmailProcessModel, final EmailPageModel emailPageModel) {
@@ -26,6 +27,7 @@ public class HybrisTubeEmailContext extends AbstractEmailContext<HybrisTubeEmail
 		put(DISPLAY_NAME, getCustomer(hybrisTubeEmailProcessModel).getDisplayName());
 
 		customerModel = getCustomer(hybrisTubeEmailProcessModel);
+		customerData = getCustomerConverter().convert(customerModel);
 	}
 
 	@Override
@@ -58,5 +60,13 @@ public class HybrisTubeEmailContext extends AbstractEmailContext<HybrisTubeEmail
 
 	public void setCustomerModel(CustomerModel customerModel) {
 		this.customerModel = customerModel;
+	}
+
+	public CustomerData getCustomerData() {
+		return customerData;
+	}
+
+	public void setCustomerData(CustomerData customerData) {
+		this.customerData = customerData;
 	}
 }

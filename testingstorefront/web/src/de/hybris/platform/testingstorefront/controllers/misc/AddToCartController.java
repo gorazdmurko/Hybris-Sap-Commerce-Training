@@ -11,10 +11,14 @@
 package de.hybris.platform.testingstorefront.controllers.misc;
 
 import de.hybris.platform.acceleratorfacades.product.data.ProductWrapperData;
+import de.hybris.platform.acceleratorservices.controllers.page.PageType;
+import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.AbstractController;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToCartForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToCartOrderForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToEntryGroupForm;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.VoucherForm;
+import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.order.converters.populator.GroupCartModificationListPopulator;
 import de.hybris.platform.commercefacades.order.data.AddToCartParams;
@@ -23,17 +27,22 @@ import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
 import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.commercefacades.quote.data.QuoteData;
+import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.core.enums.QuoteState;
+import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.event.EventService;
+import de.hybris.platform.servicelayer.event.events.AbstractEvent;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
+import de.hybris.platform.testingcore.event.HybrisTubeEmailEvent;
+import de.hybris.platform.testingcore.event.TrainingEmailEvent;
+import de.hybris.platform.testingstorefront.controllers.pages.CartPageController;
 import de.hybris.platform.util.Config;
 import de.hybris.platform.testingstorefront.controllers.ControllerConstants;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -72,6 +81,7 @@ public class AddToCartController extends AbstractController
 	@Resource(name = "groupCartModificationListPopulator")
 	private GroupCartModificationListPopulator groupCartModificationListPopulator;
 
+
 	@RequestMapping(value = "/cart/confirm", method = RequestMethod.POST, produces = "application/json")
 	public String addToCartConfirm() {
 		return ControllerConstants.Views.Fragments.Cart.CustomPopup;
@@ -80,8 +90,7 @@ public class AddToCartController extends AbstractController
 
 	@RequestMapping(value = "/cart/add", method = RequestMethod.POST, produces = "application/json")
 	public String addToCart(@RequestParam("productCodePost") final String code, final Model model,
-			@Valid final AddToCartForm form, final BindingResult bindingErrors)
-	{
+			@Valid final AddToCartForm form, final BindingResult bindingErrors) throws CMSItemNotFoundException {
 		if (bindingErrors.hasErrors())
 		{
 			return getViewWithBindingErrorMessages(model, bindingErrors);
@@ -131,8 +140,16 @@ public class AddToCartController extends AbstractController
 
 		model.addAttribute("product", productFacade.getProductForCodeAndOptions(code, Arrays.asList(ProductOption.BASIC)));
 
+		// TODO training e-mail here
+
 		return ControllerConstants.Views.Fragments.Cart.AddToCartPopup;
 	}
+
+	private AbstractEvent initializeTrainingEvent(final TrainingEmailEvent trainingEmailEvent, final CartModel cartModel) {
+		trainingEmailEvent.setCart(cartModel);
+		return trainingEmailEvent;
+	}
+
 
 	protected String getViewWithBindingErrorMessages(final Model model, final BindingResult bindingErrors)
 	{

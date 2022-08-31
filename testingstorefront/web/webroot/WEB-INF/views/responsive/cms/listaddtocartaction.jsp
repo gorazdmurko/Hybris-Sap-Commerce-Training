@@ -33,20 +33,27 @@
                     <c:set var="addToCartButton" value="addItemToCartId${fn:escapeXml(product.code)}" />
                     <button id="${addToCartButton}" type="submit" class="btn btn-primary btn-block glyphicon glyphicon-shopping-cart js-enable-btn"
                             disabled="disabled">
+                        <%-- goes to AddToCartController --%>
                     </button>
                 </c:otherwise>
             </c:choose>
         </ycommerce:testId>
     </form:form>
 
-
+    <%-- directly to cart - CartPageController --%>
     <div style="margin-top: 1em">
         <c:url value="/cart" var="cartUrl"/>
-        <form:form id="sendMail" action="${fn:escapeXml(cartUrl)}/send/mail" method="get">
-            <c:set var="sendMailButton" />
-            <button id="${sendMailButton}" type="submit">
-                <spring:theme text="Send Mail" />
-            </button>
+        <form:form id="sendMail" action="${fn:escapeXml(cartUrl)}/send/mail" method="post">
+            <ycommerce:testId code="addToCartButton">
+                <input type="hidden" name="productCodePost" value="${fn:escapeXml(product.code)}"/>
+                <input type="hidden" name="productNamePost" value="${fn:escapeXml(product.name)}"/>
+                <input type="hidden" name="productPostPrice" value="${fn:escapeXml(product.price.value)}"/>
+
+                <c:set var="sendMailButton" />
+                <button id="${sendMailButton}" type="submit" class="btn btn-primary btn-block glyphicon glyphicon-shopping-cart js-enable-btn">
+                    <spring:theme text="Send Mail" />
+                </button>
+            </ycommerce:testId>
         </form:form>
     </div>
 

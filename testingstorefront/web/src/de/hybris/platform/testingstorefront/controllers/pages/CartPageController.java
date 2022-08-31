@@ -23,12 +23,14 @@ import de.hybris.platform.acceleratorstorefrontcommons.breadcrumb.ResourceBreadc
 import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractCartPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.AddToCartForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.SaveCartForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateQuantityForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.VoucherForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.SaveCartFormValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.util.XSSFilterUtil;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.commercefacades.order.CartFacade;
 import de.hybris.platform.commercefacades.order.SaveCartFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.CartModificationData;
@@ -143,6 +145,8 @@ public class CartPageController extends AbstractCartPageController
 
 	@Resource(name = "eventService")
 	private EventService eventService;
+	@Resource(name = "cartFacade")
+	private CartFacade cartFacade;
 	//
 
 	@ModelAttribute("showCheckoutStrategies")
@@ -158,35 +162,54 @@ public class CartPageController extends AbstractCartPageController
 			final CartModel cartModel = cartService.getSessionCart();
 			if (cartModel.getTotalPrice() >= Double.valueOf(100)) {
 
-				// HYBRIS TUBE EMAIL 1
+				// HYBRIS TUBE EMAIL
 				eventService.publishEvent(initializeHybrisEvent(
 						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
 						cartModel.getSite(), cartModel.getCurrency()), cartModel));
-				// HYBRIS TUBE EMAIL 2
-				eventService.publishEvent(initializeHybrisEvent(
-						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
-						cartModel.getSite(), cartModel.getCurrency()), cartModel));
+
+				// TRAINING TUBE EMAIL
+				TrainingEmailEvent trainingEvent = new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
+				AbstractEvent event = initializeTrainingEvent(trainingEvent, cartModel);
+
+				eventService.publishEvent(event);
 			}
 		}
 
 		return prepareCartUrl(model); // "pages/cart/cartPage"
 	}
 
-	@RequestMapping(value = "/send/mail", method = RequestMethod.GET)
-	public String showCartDirectly(final Model model) throws CMSItemNotFoundException {
+	@RequestMapping(value = "/send/mail", method = RequestMethod.POST, produces = "application/json")
+	public String showCartDirectly(@RequestParam("productCodePost") final String code, final Model model,
+								   @Valid final AddToCartForm form, final BindingResult bindingErrors) throws CMSItemNotFoundException, CommerceCartModificationException {
+
+		if (bindingErrors.hasErrors())
+		{
+			return null;
+		}
+		final long qty = form.getQty();
+
+		final CartModificationData cartModification = cartFacade.addToCart(code, qty);
+		model.addAttribute("quantity", Long.valueOf(cartModification.getQuantityAdded()));
+		model.addAttribute("entry", cartModification.getEntry());
+		model.addAttribute("cartCode", cartModification.getCartCode());
+		model.addAttribute("isQuote", cartFacade.getSessionCart().getQuoteData() != null ? Boolean.TRUE : Boolean.FALSE);
+		model.addAttribute("product", productFacade.getProductForCodeAndOptions(code, Arrays.asList(ProductOption.BASIC)));
 
 		final CartModel cartModel = cartService.getSessionCart();
-		if (!userFacade.isAnonymousUser()) {
-			AbstractEvent event = initializeTrainingEvent(
-					new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency()), cartModel);
+		TrainingEmailEvent trainingEvent = new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
 
+		if (!userFacade.isAnonymousUser()) {
+			// TRAINING EMAIL
+			AbstractEvent event = initializeTrainingEvent(trainingEvent, cartModel);
 			eventService.publishEvent(event);
+
+			// HYBRIS TUBE EMAIL
+			eventService.publishEvent(initializeHybrisEvent(
+					new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
+							cartModel.getSite(), cartModel.getCurrency()), cartModel));
 		}
 
-		eventService.publishEvent(initializeTrainingEvent(
-				new TrainingEmailEvent(cartModel, cartModel.getStore(),
-				cartModel.getSite(), cartModel.getCurrency()), cartModel));
-
+		eventService.publishEvent(initializeTrainingEvent(trainingEvent, cartModel));
 		return prepareCartUrl(model);
 	}
 

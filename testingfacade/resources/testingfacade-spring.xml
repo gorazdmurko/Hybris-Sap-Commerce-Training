@@ -114,7 +114,7 @@
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL CONTEXT MAPPING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <bean id="hybrisTubeEmailContext" class="de.hybris.platform.testingfacade.processes.email.context.HybrisTubeEmailContext"
           parent="abstractEmailContext" scope="prototype" >
-<!--        <property name="customerConverter" ref="customerConverter"/>-->
+        <property name="customerConverter" ref="customerConverter"/>
     </bean>
     <bean id="trainingEmailContext" class="de.hybris.platform.testingfacade.processes.email.context.TrainingEmailContext"
           parent="abstractEmailContext" scope="prototype" >
