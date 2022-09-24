@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <process xmlns="http://www.hybris.de/xsd/processdefinition" start="generateTrainingEmail" name="trainingEmailProcess"
-         processClass="de.hybris.platform.testingcore.model.custom.TrainingEmailProcessModel" onError="error">
+         processClass="de.hybris.platform.testingcore.model.custom.TrainingEmailProcessModel" onError="errorSending">
                                                                                 <!-- define process bean trainingEmailProcess !!! -->
 
     <action id="generateTrainingEmail" bean="generateTrainingEmailAction">      <!-- define action bean !!! -->
@@ -19,6 +19,7 @@
     </action>
 
     <end id="error" state="ERROR">Something went wrong.</end>
+    <end id="errorSending" state="ERROR">Could not send Email.</end>
     <end id="failed" state="FAILED">Could not send forgotten password email.</end>
     <end id="success" state="SUCCEEDED">Sent Premium Eligibility email.</end>
 

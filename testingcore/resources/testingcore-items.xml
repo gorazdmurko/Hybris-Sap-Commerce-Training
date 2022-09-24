@@ -120,6 +120,38 @@
 			</attributes>
 		</itemtype>
 
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 6 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- SimpleCMSComponent -->
+		<itemtype code="TrainingVideoComponent"
+				  extends="SimpleCMSComponent"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.TrainingVideoComponent"
+				  abstract="false">
+			<attributes>
+				<attribute qualifier="width" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="height" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="videoId" type="java.lang.String">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="autoPlay" type="java.lang.Boolean">
+					<modifiers optional="false" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="showControls" type="java.lang.Boolean">
+					<modifiers optional="false" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
 
 
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 4 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

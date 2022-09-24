@@ -35,6 +35,20 @@
     <alias name="defaultTokenDataPopulator" alias="externalTokenDataPopulator" />
     <bean id="defaultTokenDataPopulator" class="de.hybris.platform.testingfacade.converters.populator.ExternalTokenDataPopulator" />
 
+<!--    &lt;!&ndash; 1. locodeles CONVERTER >> it uses (refers to) locodeles POPULATOR &ndash;&gt;-->
+<!--    <alias name="defaultLocodelesDataConverter" alias="locodelesDataConverter" />-->
+<!--    <bean id="defaultLocodelesDataConverter" parent="abstractPopulatingConverter">-->
+<!--        <property name="targetClass" value="de.hybris.xxx.yyy.LocodelesData" />-->
+<!--        <property name="populators">-->
+<!--            <list>-->
+<!--                <ref bean="locodelesDataPopulator" />-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+<!--    &lt;!&ndash; locodeles POPULATOR - POJO class locodelesDataPopulator &ndash;&gt;-->
+<!--    <alias name="defaultLocodelesDataPopulator" alias="locodelesDataPopulator" />-->
+<!--    <bean id="defaultLocodelesDataPopulator" class="de.hybris.xxx.yyy.LocodelesDataPopulator" />-->
+
 
 
     <!-- 2. a) CONVERTER >> add customerDataPopulator from above to out-of-the-box customerConverter list -->
@@ -112,10 +126,12 @@
 
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL CONTEXT MAPPING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- HybrisTubeEmail CONTEXT -->
     <bean id="hybrisTubeEmailContext" class="de.hybris.platform.testingfacade.processes.email.context.HybrisTubeEmailContext"
           parent="abstractEmailContext" scope="prototype" >
         <property name="customerConverter" ref="customerConverter"/>
     </bean>
+    <!-- TrainingEmail CONTEXT -->
     <bean id="trainingEmailContext" class="de.hybris.platform.testingfacade.processes.email.context.TrainingEmailContext"
           parent="abstractEmailContext" scope="prototype" >
         <!--        <property name="customerConverter" ref="customerConverter"/>-->

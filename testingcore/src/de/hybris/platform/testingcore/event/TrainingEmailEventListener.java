@@ -15,18 +15,17 @@ public class TrainingEmailEventListener extends AbstractAcceleratorSiteEventList
 
     private ModelService modelService;
     private BusinessProcessService businessProcessService;
-    private KeyGenerator processCodeGenerator;
+    // private KeyGenerator processCodeGenerator;
 
     @Override
     protected void onSiteEvent(final TrainingEmailEvent event) {
 
-        final TrainingEmailProcessModel emailProcessModel = getBusinessProcessService()
-                .createProcess("trainingEmail-" + event.getCart().getCode() +
-                        "-" + processCodeGenerator.generateKey().toString(), "trainingEmailProcess"); // process name last argument
+//        final TrainingEmailProcessModel emailProcessModel = getBusinessProcessService().createProcess(
+//                "trainingEmail-" + event.getCart().getCode() + "-" +
+//                    processCodeGenerator.generateKey().toString(), "trainingEmailProcess"); // process name last argument
 
-//        final TrainingEmailProcessModel emailProcessModel = getBusinessProcessService()
-//                .createProcess("trainingEmail-" + event.getCart().getCode() +
-//                        "-" + System.currentTimeMillis(), "trainingEmailProcess");
+        final TrainingEmailProcessModel emailProcessModel = getBusinessProcessService().createProcess(
+                "trainingEmail-" + event.getCart().getCode() + "-" + System.currentTimeMillis(), "trainingEmailProcess");
 
         emailProcessModel.setCart(event.getCart());
         emailProcessModel.setCurrency(event.getCurrency());
@@ -65,11 +64,11 @@ public class TrainingEmailEventListener extends AbstractAcceleratorSiteEventList
     }
 
     // UNUSED
-    public KeyGenerator getProcessCodeGenerator() {
-        return processCodeGenerator;
-    }
-
-    public void setProcessCodeGenerator(KeyGenerator processCodeGenerator) {
-        this.processCodeGenerator = processCodeGenerator;
-    }
+//    public KeyGenerator getProcessCodeGenerator() {
+//        return processCodeGenerator;
+//    }
+//
+//    public void setProcessCodeGenerator(KeyGenerator processCodeGenerator) {
+//        this.processCodeGenerator = processCodeGenerator;
+//    }
 }

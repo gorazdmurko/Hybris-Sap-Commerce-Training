@@ -1,6 +1,5 @@
 package de.hybris.platform.testingfacade.converters.populator;
 
-import de.hybris.platform.commercefacades.user.converters.populator.CustomerPopulator;
 import de.hybris.platform.converters.Converters;
 import de.hybris.platform.converters.Populator;
 import de.hybris.platform.core.model.user.CustomerModel;
@@ -11,7 +10,6 @@ import de.hybris.platform.testingcore.model.ExternalTokenModel;
 import de.hybris.platform.testingfacade.data.ExternalTokenData;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 // extends CustomerPopulator ??

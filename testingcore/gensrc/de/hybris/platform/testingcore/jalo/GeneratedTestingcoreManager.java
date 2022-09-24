@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 20.8.2022 11:36:57                          ---
+ * --- Generated at 23.9.2022 15:57:01                          ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -28,6 +28,7 @@ import de.hybris.platform.testingcore.constants.TestingcoreConstants;
 import de.hybris.platform.testingcore.jalo.ExternalToken;
 import de.hybris.platform.testingcore.jalo.SocialSite;
 import de.hybris.platform.testingcore.jalo.TrainingProduct;
+import de.hybris.platform.testingcore.jalo.components.TrainingVideoComponent;
 import de.hybris.platform.testingcore.jalo.custom.HybrisTubeEmailProcess;
 import de.hybris.platform.testingcore.jalo.custom.TrainingEmailProcess;
 import de.hybris.platform.util.OneToManyHandler;
@@ -211,6 +212,32 @@ public abstract class GeneratedTestingcoreManager extends Extension
 	public TrainingProduct createTrainingProduct(final Map attributeValues)
 	{
 		return createTrainingProduct( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public TrainingVideoComponent createTrainingVideoComponent(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( TestingcoreConstants.TC.TRAININGVIDEOCOMPONENT );
+			return (TrainingVideoComponent)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating TrainingVideoComponent : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public TrainingVideoComponent createTrainingVideoComponent(final Map attributeValues)
+	{
+		return createTrainingVideoComponent( getSession().getSessionContext(), attributeValues );
 	}
 	
 	/**

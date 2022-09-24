@@ -47,7 +47,9 @@ import de.hybris.platform.commercefacades.voucher.exceptions.VoucherOperationExc
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
 import de.hybris.platform.commerceservices.order.CommerceSaveCartException;
 import de.hybris.platform.core.enums.QuoteState;
+import de.hybris.platform.core.model.order.CartEntryModel;
 import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.enumeration.EnumerationService;
 import de.hybris.platform.order.CartService;
 import de.hybris.platform.servicelayer.event.EventService;
@@ -160,21 +162,18 @@ public class CartPageController extends AbstractCartPageController
 	{
 		if (!userFacade.isAnonymousUser()) {
 			final CartModel cartModel = cartService.getSessionCart();
+			HybrisTubeEmailEvent hybrisEvent = new HybrisTubeEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
+
 			if (cartModel.getTotalPrice() >= Double.valueOf(100)) {
 
 				// HYBRIS TUBE EMAIL
 				eventService.publishEvent(initializeHybrisEvent(
 						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
 						cartModel.getSite(), cartModel.getCurrency()), cartModel));
-
-				// TRAINING TUBE EMAIL
-				TrainingEmailEvent trainingEvent = new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
-				AbstractEvent event = initializeTrainingEvent(trainingEvent, cartModel);
-
-				eventService.publishEvent(event);
 			}
-		}
+			eventService.publishEvent(initializeHybrisEvent(hybrisEvent, cartModel));
 
+		}
 		return prepareCartUrl(model); // "pages/cart/cartPage"
 	}
 
@@ -199,14 +198,13 @@ public class CartPageController extends AbstractCartPageController
 		TrainingEmailEvent trainingEvent = new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
 
 		if (!userFacade.isAnonymousUser()) {
-			// TRAINING EMAIL
-			AbstractEvent event = initializeTrainingEvent(trainingEvent, cartModel);
-			eventService.publishEvent(event);
-
-			// HYBRIS TUBE EMAIL
-			eventService.publishEvent(initializeHybrisEvent(
-					new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
-							cartModel.getSite(), cartModel.getCurrency()), cartModel));
+			if (cartModel.getEntries().size() > 0) {
+				// TRAINING EMAIL
+				AbstractEvent event = initializeTrainingEvent(trainingEvent, cartModel);
+				eventService.publishEvent(event);
+			} else {
+				System.out.println("Cart is currently empty!");
+			}
 		}
 
 		eventService.publishEvent(initializeTrainingEvent(trainingEvent, cartModel));

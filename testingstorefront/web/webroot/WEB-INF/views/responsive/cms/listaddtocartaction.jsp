@@ -51,7 +51,7 @@
 
                 <c:set var="sendMailButton" />
                 <button id="${sendMailButton}" type="submit" class="btn btn-primary btn-block glyphicon glyphicon-shopping-cart js-enable-btn">
-                    <spring:theme text="Send Mail" />
+                    <spring:theme text="Training Mail" />
                 </button>
             </ycommerce:testId>
         </form:form>
