@@ -17,7 +17,7 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 	<enumtypes>
-		<!-- dynamic enum means, values can be changed at run time using impex or hmc -->
+		<!-- dynamic enum means, values can be changed at run time using impex or hmc(backoffice) -->
 		<!-- static enum means, values can only be changed during compilation time by changing the items.xml -->
 		<enumtype code="AbcEnum" generate="true" autocreate="true" dynamic="false">
 			<value code="testAbc1" />

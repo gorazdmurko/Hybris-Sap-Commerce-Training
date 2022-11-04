@@ -12,7 +12,7 @@
     <actionClassName>de.hybris.platform.testingbackoffice.actions.Save</actionClassName>
 
     <sockets>
-        <output id="typeCode" type="java.util.String" />
+        <output id="currentObject" type=".hybris.platform.core.model.ItemModel" />   <!-- check Popup Action for reference !!!! -->
     </sockets>
 
     <iconUri>icons/floppy.png</iconUri>

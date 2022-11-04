@@ -7,7 +7,7 @@
                    xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
     <name>Import Action</name>
     <description>Action opening import</description>
-    <author>Alex</author>
+    <author>Gorazd</author>
     <version>1.0</version>
 
     <actionClassName>de.hybris.platform.testingbackoffice.actions.FileDataImport</actionClassName>

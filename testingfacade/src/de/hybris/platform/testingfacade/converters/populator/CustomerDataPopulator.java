@@ -25,14 +25,17 @@ public class CustomerDataPopulator implements Populator<CustomerModel, CustomerD
 
         List<String> name = splitName(source.getName());
 
-        // !! populate id, title, firstName, lastName
-        target.setCustomerId(source.getCustomerID());
-        target.setTitle(String.valueOf(source.getTitle()));
+        // !! populate firstName, lastName, id & title
         target.setFirstName(name.get(0));
         target.setLastName(name.get(1));
+        target.setCustomerId(source.getCustomerID());
+        target.setTitle(String.valueOf(source.getTitle()));
 
         // !! POPULATE EXTERNAL TOKENS      ==>  populates list      ==>    .convertAll(sourceList, converter);
-        target.setExternalTokens(new ArrayList<ExternalTokenData>(Converters.convertAll(source.getExternalToken(), getTokenDataConverter())));
+        target.setExternalTokens(new ArrayList<ExternalTokenData>(
+                Converters.convertAll(
+                        source.getExternalToken(), getTokenDataConverter())
+                ));
 
     }
 
