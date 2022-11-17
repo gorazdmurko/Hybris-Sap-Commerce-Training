@@ -7,18 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Video Component</title>
-</head>
-<body>
-    <div>
-        <iframe
+    <head>
+        <title>Video Component</title>
+    </head>
+    <body>
+        <div>
+            <iframe
                 width="${width}"
                 height="${height}"
-                src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}">
-        </iframe>
-    </div>
-</body>
+                src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}"
+            >
+            </iframe>
+        </div>
+    </body>
 </html>
 
 

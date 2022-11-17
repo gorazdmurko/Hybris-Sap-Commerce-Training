@@ -18,10 +18,19 @@
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FACADE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!--
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONVERTERS / POPULATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            externalTokenDataPopulator
+        =>  externalTokenDataConverter
+        =>  customerDataPopulator
+        =>  customerConverter
+    -->
 
+    <!-- 1. token POPULATOR - POJO class externalTokenDataPopulator -->
+    <alias name="defaultTokenDataPopulator" alias="externalTokenDataPopulator" />
+    <bean id="defaultTokenDataPopulator" class="de.hybris.platform.testingfacade.converters.populator.ExternalTokenDataPopulator" />
 
-
-    <!-- 1. token CONVERTER >> it uses (refers to) token POPULATOR -->
+    <!-- token CONVERTER >> it uses (refers to) token POPULATOR -->
     <alias name="defaultTokenDataConverter" alias="externalTokenDataConverter" />
     <bean id="defaultTokenDataConverter" parent="abstractPopulatingConverter">
         <property name="targetClass" value="de.hybris.platform.testingfacade.data.ExternalTokenData" />
@@ -31,19 +40,8 @@
             </list>
         </property>
     </bean>
-    <!-- token POPULATOR - POJO class externalTokenDataPopulator -->
-    <alias name="defaultTokenDataPopulator" alias="externalTokenDataPopulator" />
-    <bean id="defaultTokenDataPopulator" class="de.hybris.platform.testingfacade.converters.populator.ExternalTokenDataPopulator" />
 
-
-    <!-- 2. a) CONVERTER >> add customerDataPopulator from above to out-of-the-box customerConverter list -->
-    <!-- located (out-of-the-box) in commercefacades-spring.xml between lines 590 & 606 -->
-    <bean parent="modifyPopulatorList">
-        <property name="list" ref="customerConverter"/>
-        <property name="add"  ref="customerDataPopulator"/>
-    </bean>
-
-    <!-- customer POPULATOR - POJO class customerDataPopulator -->
+    <!-- 2. customer POPULATOR - POJO class customerDataPopulator -->
     <alias name="defaultCustomerDataPopulator" alias="customerDataPopulator" />
     <bean id="defaultCustomerDataPopulator" class="de.hybris.platform.testingfacade.converters.populator.CustomerDataPopulator">
         <property name="tokenConverter" ref="externalTokenDataConverter" />
@@ -51,7 +49,12 @@
     <!-- !!!! has a property tokenConverter, which REFERS TO above externalTokenDataConverter !!!!! -->
     <!-- !!! it uses setTokenConverter method from CustomerdataPopulator class !!! -->
 
-
+    <!-- CONVERTER >> add customerDataPopulator from above to out-of-the-box customerConverter list -->
+    <!-- located (out-of-the-box) in commercefacades-spring.xml between lines 590 & 606 -->
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="customerConverter"/>
+        <property name="add"  ref="customerDataPopulator"/>
+    </bean>
 
     <!-- 3. populates CustomerListData -->
     <!-- FLOW in custom FOR LOOP:
@@ -68,7 +71,6 @@
     <!--        <property name="list" ref="customerConverter"/>-->
     <!--        <property name="add"  ref="customerListDataPopulator"/>-->
     <!--    </bean>-->
-
 
 
     <!-- 4. populates CustomerListData by names -->

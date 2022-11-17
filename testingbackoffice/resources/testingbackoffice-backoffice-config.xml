@@ -261,6 +261,18 @@
 			</y:group>
 		</y:actions>
 	</context>
+	<!-- delete after -->
+	<context merge-by="module" type="Customer" component="editorareaactions">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="registrationInvite" show-group-header="false" show-separator="true">
+				<y:label>actiongroup.registrationInvite</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.SendRegistrationInviteAction" property="selectedObjects" />
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.SendRegistrationInviteAction" property="currentObject" />
+				<!-- !! property selectedObject means that action works properly only if more objects are selected !! -->
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- delete after -->
 	<!-- 5. CUSTOMER actions - EDITOR AREA -->
 	<context component="editorareaactions" merge-by="module" type="Customer">	<!-- ?? parent="auto" ?? -->
 		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
@@ -325,10 +337,19 @@
 			</y:group>
 		</y:actions>
 	</context>
+
 	<!-- 6. ORDER actions - EDITOR AREA -->
 	<context type="AbstractOrder" component="editorareaactions" merge-by="type" parent="auto">
 		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
-			<y:group qualifier="common">
+			<y:group qualifier="common" show-group-header="true" show-separator="true">
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.popup" property="currentObject"/>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 6. ORDER actions - LISTVIEW AREA ~~ test - if above example works in listviewactions ?? -->
+	<context type="AbstractOrder" component="listviewactions" merge-by="type" parent="auto">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common" show-group-header="true" show-separator="true">
 				<y:action action-id="de.hybris.platform.testingbackoffice.actions.popup" property="currentObject"/>
 			</y:group>
 		</y:actions>
@@ -343,6 +364,38 @@
 					<y:parameter>
 						<y:name>actionName</y:name>
 						<y:value>label.export.all2</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- ~~~~~~~~~~~~~~~~~~ T E S T ~~ T E S T ~~ T E S T ~~ T E S T ~~ T E S T ~~ A C T I O N S ~~~~~~~~~~~~~~~~~~~ -->
+	<!--																											 -->
+	<!-- Product test actions -->
+	<context type="Product" component="editorareaactions" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="test" show-separator="true" show-group-header="true">
+				<y:label>actiongroup.test</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.testAction" property="pageable.typeCode">
+					<!-- !! changed from property="currentObject" to pageable.typeCode !! -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.test</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- Employee test actions -->
+	<context type="Employee" component="listviewactions" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="test" show-group-header="true" show-separator="true">
+				<y:label>actiongroup.test</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.testAction" property="pageable.typeCode">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.test</y:value>
 					</y:parameter>
 				</y:action>
 			</y:group>

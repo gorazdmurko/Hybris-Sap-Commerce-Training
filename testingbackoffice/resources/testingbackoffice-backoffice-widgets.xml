@@ -72,9 +72,9 @@
                 slotId="cockpitWidgetChildrenInvisible" template="false">
             <setting key="expression" type="String">
                 {
-                TYPE_CODE:#root.typeCode,
-                configurableFlowConfigCtx:'export-wizard-test',
-                exportData:#root
+                    TYPE_CODE:#root.typeCode,
+                    configurableFlowConfigCtx:'export-wizard-test',
+                    exportData:#root
                 }
             </setting>
             <setting key="socketDataType_$T" type="String">java.util.Map</setting>
