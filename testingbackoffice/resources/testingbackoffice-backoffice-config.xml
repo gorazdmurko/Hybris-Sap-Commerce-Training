@@ -261,18 +261,6 @@
 			</y:group>
 		</y:actions>
 	</context>
-	<!-- delete after -->
-	<context merge-by="module" type="Customer" component="editorareaactions">
-		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
-			<y:group qualifier="registrationInvite" show-group-header="false" show-separator="true">
-				<y:label>actiongroup.registrationInvite</y:label>
-				<y:action action-id="de.hybris.platform.testingbackoffice.actions.SendRegistrationInviteAction" property="selectedObjects" />
-				<y:action action-id="de.hybris.platform.testingbackoffice.actions.SendRegistrationInviteAction" property="currentObject" />
-				<!-- !! property selectedObject means that action works properly only if more objects are selected !! -->
-			</y:group>
-		</y:actions>
-	</context>
-	<!-- delete after -->
 	<!-- 5. CUSTOMER actions - EDITOR AREA -->
 	<context component="editorareaactions" merge-by="module" type="Customer">	<!-- ?? parent="auto" ?? -->
 		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
@@ -286,15 +274,16 @@
 					</y:parameter>
 				</y:action>
 			</y:group>
-			<y:group qualifier="save2" show-group-header="true" show-separator="true">
-				<y:label>actiongroup.save2</y:label>
-				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="currentObject">
-					<y:parameter>
-						<y:name>actionName</y:name>
-						<y:value>testing.action.confirmation.title.save</y:value>	<!-- popup with title appears -->
-					</y:parameter>
-				</y:action>
-			</y:group>
+			<!-- !!!!! can't work, because perform() accepts string but currentObject is an object (CustomerModel) !!!!! -->
+<!--			<y:group qualifier="save2" show-group-header="true" show-separator="true">-->
+<!--				<y:label>actiongroup.save2</y:label>-->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="currentObject">-->
+<!--					<y:parameter>-->
+<!--						<y:name>actionName</y:name>-->
+<!--						<y:value>testing.action.confirmation.title.save</y:value>	&lt;!&ndash; popup with title appears &ndash;&gt;-->
+<!--					</y:parameter>-->
+<!--				</y:action>-->
+<!--			</y:group>-->
 			<y:group qualifier="save3" show-group-header="true" show-separator="true">
 				<y:label>actiongroup.save3</y:label>
 				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="selectedObjects">
@@ -315,16 +304,17 @@
 					</y:parameter>
 				</y:action>
 			</y:group>
-			<y:group qualifier="smile2" show-group-header="true" show-separator="true">
-				<!-- action **SUCCESS -->
-				<y:label>actiongroup.smile2</y:label>
-				<y:action action-id="de.hybris.platform.testingbackoffice.actions.smiley" property="currentObject">
-					<y:parameter>
-						<y:name>actionName</y:name>
-						<y:value>testing.action.confirmation.title.smiley</y:value>	<!-- popup with title appears -->
-					</y:parameter>
-				</y:action>
-			</y:group>
+			<!-- !!!!! can't work, because perform() accepts string but currentObject is an object (CustomerModel) !!!!! -->
+<!--			<y:group qualifier="smile2" show-group-header="true" show-separator="true">-->
+<!--				&lt;!&ndash; action **SUCCESS &ndash;&gt;-->
+<!--				<y:label>actiongroup.smile2</y:label>-->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.smiley" property="currentObject">-->
+<!--					<y:parameter>-->
+<!--						<y:name>actionName</y:name>-->
+<!--						<y:value>testing.action.confirmation.title.smiley</y:value>	&lt;!&ndash; popup with title appears &ndash;&gt;-->
+<!--					</y:parameter>-->
+<!--				</y:action>-->
+<!--			</y:group>-->
 			<y:group qualifier="smile3" show-group-header="true" show-separator="true">
 				<!-- action **SUCCESS -->
 				<y:label>actiongroup.smile3</y:label>
@@ -401,6 +391,22 @@
 			</y:group>
 		</y:actions>
 	</context>
+	<!-- Resend registration Invite Email -->
+	<context merge-by="module" component="editorareaactions" type="Customer">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common" show-group-header="false" show-separator="false">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.resendregistrationemail" property="currentObject">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.resend.registration.email.title</y:value>	<!-- popup title Confirm sending an e-mail? -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+
+		</y:actions>
+	</context>
+
 
 
 	<!-- ~~~~~~~~~~~~~~~~~~~ C U S T O M ~~ W I Z A R D S ~~ ON ~~ C U S T O M ~~ A C T I O N S ~~~~~~~~~~~~~~~~~~~~ -->
