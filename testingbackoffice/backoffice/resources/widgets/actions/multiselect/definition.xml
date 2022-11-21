@@ -15,7 +15,7 @@
 <!--    <outputType>java.lang.String</outputType>-->
 
     <sockets>
-        <output id="typeCode" type="java.lang.String"/>
+        <output id="typeCode" type="java.util.ArrayList"/>  <!-- String -->
     </sockets>
 
     <iconUri>icons/folder.png</iconUri>

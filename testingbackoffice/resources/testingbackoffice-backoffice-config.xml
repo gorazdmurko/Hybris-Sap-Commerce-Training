@@ -223,7 +223,7 @@
 			<y:group qualifier="multipleSelect" show-group-header="false" show-separator="true">
 				<!-- action **SUCCESS -->
 				<y:label>actiongroup.multipleSelect</y:label>
-				<y:action action-id="de.hybris.platform.testingbackoffice.actions.multipleProductsSelectAction" property="pageable.typeCode">
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.multipleProductsSelectAction" property="selectedObjects"> <!-- pageable.typeCode -->
 					<y:parameter>
 						<y:name>actionName</y:name>
 						<y:value>testing.action.confirmation.title.open</y:value>	<!-- popup with title OPEN WIZARD? -->
