@@ -88,6 +88,86 @@
 
 
 
+    <!-- custom mySearch widget -->
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="trainingbackoffice" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"
+                template="false" title="trainingbackoffice">
+            <widget id="mySearch" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.mySearch" slotId="leftSlot"/>
+        </widget>
+    </widget-extension>
+    <!-- custom input widget -->
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="trainingbackoffice-input" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"
+                template="false" title="trainingbackoffice-input">
+            <widget id="customInput" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.customInput" slotId="rightSlot"/>
+        </widget>
+    </widget-extension>
+
+    <!-- custom myChat widget -->
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="testing-backoffice-myChat" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"
+                template="false" title="testing-backoffice-myChat">
+            <widget id="myChatLeft" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.myChat" slotId="leftSlot"/>
+            <widget id="myChatRight" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.myChat" slotId="rightSlot"/>
+        </widget>
+    </widget-extension>
+
+    <widget-connection sourceWidgetId="myChatLeft" outputId="outgoingMsg" targetWidgetId="myChatRight" inputId="incomingMsg"/>
+    <widget-connection sourceWidgetId="myChatRight" outputId="outgoingMsg" targetWidgetId="myChatLeft" inputId="incomingMsg"/>
+
+
+    <!-- Door & Alarm widgets -->
+    <widget id="Door" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.door.doorWidget">
+        <widget id="Alarm" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.alarm.alarmWidget"
+                template="true" slotId="cockpitWidgetChildrenInvisible">
+            <virtual-sockets>
+                <input id="triggerAlarm" type="java.lang.Object"/>
+            </virtual-sockets>
+        </widget>
+
+        <virtual-sockets>
+            <output id="de.hybris.platform.testingbackoffice.actions.lock.success" type="java.lang.Object"/>
+        </virtual-sockets>
+    </widget>
+    <widget-connection sourceWidgetId="Door" outputId="de.hybris.platform.testingbackoffice.actions.lock.success"
+                       targetWidgetId="Alarm" inputId="triggerAlarm" />
+
+
+<!--    <widget-extension widgetId="backofficeMainSlot">-->
+<!--        <widget id="explodedPictureWidget" widgetDefinitionId="net.ycn.ycnbackoffice.widgets.explodedpicture"-->
+<!--                slotId="cockpitWidgetChildrenInvisible" template="true">-->
+<!--            <instance-settings socketEventRoutingMode="LAST_USED">-->
+<!--                <create onInit="false" reuseExisting="true">-->
+<!--                    <all-incoming-events/>-->
+<!--                </create>-->
+<!--                <select onInit="false">-->
+<!--                    <all-incoming-events/>-->
+<!--                </select>-->
+<!--                <close>-->
+<!--                    <all-outgoing-events/>-->
+<!--                </close>-->
+<!--            </instance-settings>-->
+<!--            <setting key="widgetStyleClass" type="String"></setting>-->
+<!--            <setting key="__externalLocationPath" type="String">extension://platformbackoffice</setting>-->
+<!--            <setting key="widgetStyleAttribute" type="String"></setting>-->
+<!--            &lt;!&ndash; <setting key="searchVisibilityThreshold" type="Integer">4</setting> &ndash;&gt;-->
+<!--            <setting key="_width" type="String">500px</setting>-->
+<!--            <setting key="_height" type="String">auto</setting>-->
+<!--            &lt;!&ndash;  <setting key="listitemRenderer" type="String"></setting>  &ndash;&gt;-->
+<!--            <virtual-sockets/>-->
+<!--            &lt;!&ndash; <widget id="syncPopupNotificationarea" widgetDefinitionId="com.hybris.backoffice.notificationarea"-->
+<!--                    slotId="syncPopupNotificationarea" template="false">-->
+<!--                <setting key="notificationId" type="String">syncPopup</setting>-->
+<!--                <setting key="widgetStyleAttribute" type="String"></setting>-->
+<!--                <setting key="debugLog" type="Boolean">false</setting>-->
+<!--                <setting key="widgetStyleClass" type="String"></setting>-->
+<!--                <setting key="stackSize" type="Integer">3</setting>-->
+<!--                <setting key="useDynamicNotificationId" type="Boolean">true</setting>-->
+<!--                <virtual-sockets/>-->
+<!--            </widget> &ndash;&gt;-->
+<!--        </widget>-->
+<!--    </widget-extension>-->
+
 
     <!-- CUSTOM training -->
     <!-- https://medium.com/@neznajuskas/hybris-backoffice-custom-widget-in-explorer-tree-6544e8ee44d7 -->

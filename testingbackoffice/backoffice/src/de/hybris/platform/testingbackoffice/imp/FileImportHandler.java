@@ -34,6 +34,7 @@ public class FileImportHandler implements FlowActionHandler {
 
     public static final String XML_EXTENSION = "xml";
     private static final Logger LOG = LoggerFactory.getLogger(FileImportHandler.class);
+
     private MimeService mimeService;
     private CockpitProperties cockpitProperties;
     private NotificationService notificationService;

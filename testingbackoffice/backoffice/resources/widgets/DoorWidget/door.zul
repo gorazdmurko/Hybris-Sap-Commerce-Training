@@ -1,0 +1,21 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.zkoss.org/2005/zul"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.hybris.com/schema/cockpitng/zul/zul.xsd"
+        height="100%">
+    <vlayout sclass="yw-savedqueries-container">
+        <div id="headerContainer" sclass="header-container">
+            <label id="headerLabel" value="Door widget 1"/>
+        </div>
+
+        <div>
+            <hlayout>
+                <button id="openBtn" label="Open"/>
+                <button id="closeBtn" label="Close"/>
+                <action actionId="com.hybris.cockpitng.action.lock" property="door" />
+            </hlayout>
+        </div>
+    </vlayout>
+</widget>

@@ -68,4 +68,8 @@
 	<bean name="defaultExportHandler" class="de.hybris.platform.testingbackoffice.imp.ExportHandler" />
 
 
+	<!-- custom mySearch widget service -->
+	<bean id="searchService" class="de.hybris.platform.testingbackoffice.widgets.SearchService"></bean>
+	<!-- custom input widget service -->
+	<bean id="customInputService" class="de.hybris.platform.testingbackoffice.widgets.CustomInputService"></bean>
 </beans>
