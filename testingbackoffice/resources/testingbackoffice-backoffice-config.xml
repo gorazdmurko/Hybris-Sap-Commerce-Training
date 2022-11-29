@@ -589,7 +589,7 @@
 		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
 			<y:group qualifier="common">
 				<y:label>actiongroup.common</y:label>
-				<y:action action-id="com.hybris.cockpitng.action.lock" property="door">
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.lock" property="door">
 					<y:parameter>
 						<y:name>lockSocket</y:name>
 						<y:value>door</y:value>

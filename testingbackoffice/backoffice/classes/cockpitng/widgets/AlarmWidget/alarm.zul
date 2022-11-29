@@ -1,0 +1,24 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.zkoss.org/2005/zul"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.hybris.com/schema/cockpitng/zul/zul.xsd"
+        height="100%">
+    <style>
+        .container { text-align:center; margin: 50px 100px; }
+        .container .z-panel-embedded-cnt { padding:0; }
+        .txb { border: none; }
+    </style>
+
+    <zscript><![CDATA[
+    String selectedPosition = "before_start";
+]]></zscript>
+
+    <panel framable="true" sclass="container" width="300px">
+        <panelchildren>
+            <textbox id='txb' sclass="txb" value="This is an Alarm ! " hflex="1" style="background:#FFFFCC" rows="8" />
+        </panelchildren>
+    </panel>
+
+</widget>
