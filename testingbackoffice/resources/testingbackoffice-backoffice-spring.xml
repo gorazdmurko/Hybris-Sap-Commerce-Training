@@ -49,8 +49,8 @@
 	<alias name="defaultFileImportHandler" alias="fileImportHandler"/>
 	<bean name="defaultFileImportHandler" class="de.hybris.platform.testingbackoffice.imp.FileImportHandler">
 		<property name="notificationService" ref="customNotificationService"/>
-		<property name="mimeService" ref="mimeService"/>
-		<property name="cockpitProperties" ref="cockpitProperties"/>
+		<property name="mimeService" ref="mimeService" />
+		<property name="cockpitProperties" ref="cockpitProperties" />
 		<property name="parser" ref="staxParser" />
 		<property name="modelService" ref="modelService" />
 		<property name="productService" ref="defaultProductService" />
@@ -69,7 +69,8 @@
 
 
 	<!-- custom mySearch widget service -->
-	<bean id="searchService" class="de.hybris.platform.testingbackoffice.widgets.SearchService"></bean>
-	<!-- custom input widget service -->
-	<bean id="customInputService" class="de.hybris.platform.testingbackoffice.widgets.CustomInputService"></bean>
+	<bean id="mySearchService" class="de.hybris.platform.testingbackoffice.widgets.MySearchService" />
+
+	<!-- custom myInput widget service -->
+	<bean id="myInputService" class="de.hybris.platform.testingbackoffice.widgets.MyInputService" />
 </beans>

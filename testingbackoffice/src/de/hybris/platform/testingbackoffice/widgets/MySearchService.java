@@ -3,7 +3,7 @@ package de.hybris.platform.testingbackoffice.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchService {
+public class MySearchService {
 
     public List<String> search(final String text)
     {

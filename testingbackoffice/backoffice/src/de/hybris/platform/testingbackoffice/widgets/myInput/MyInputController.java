@@ -1,28 +1,27 @@
-package de.hybris.platform.testingbackoffice.widgets.customInput;
+package de.hybris.platform.testingbackoffice.widgets.myInput;
 
 import com.hybris.cockpitng.annotations.ViewEvent;
-import com.hybris.cockpitng.core.util.impl.TypedSettingsMap;
-import com.hybris.cockpitng.search.data.pageable.Pageable;
 import com.hybris.cockpitng.util.DefaultWidgetController;
-import com.hybris.cockpitng.widgets.collectionbrowser.mold.impl.PagingDelegateController;
-import com.hybris.cockpitng.widgets.collectionbrowser.mold.impl.TitleDelegateController;
-import de.hybris.platform.testingbackoffice.widgets.CustomInputService;
-import org.zkoss.zk.ui.Executions;
+import de.hybris.platform.testingbackoffice.widgets.MyInputService;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.api.Textbox;
 
+import com.hybris.cockpitng.core.util.impl.TypedSettingsMap;
+import com.hybris.cockpitng.search.data.pageable.Pageable;
+import com.hybris.cockpitng.widgets.collectionbrowser.mold.impl.PagingDelegateController;
+import com.hybris.cockpitng.widgets.collectionbrowser.mold.impl.TitleDelegateController;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.Selectors;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Div;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Collections;
 
 
-public class CustomInputController extends DefaultWidgetController {
+public class MyInputController extends DefaultWidgetController {
 
     @Wire
     private Div pagingContainerTop;
@@ -34,16 +33,23 @@ public class CustomInputController extends DefaultWidgetController {
     private transient TitleDelegateController titleDelegateController;
 
 
+
     private Textbox textInput;
-
     @WireVariable
-    private CustomInputService customInputService;
-
+    private MyInputService myInputService;
 
     @ViewEvent(componentID = "submitButton", eventName = Events.ON_CLICK)
     public void doOperation() throws InterruptedException {
 
-        final boolean result = customInputService.isNumberOrNot(textInput.getText());
+        final boolean r = isNumberOrNot(textInput.getText());
+        if (r == true) {
+            Messagebox.show("Input value is an integer", "TRUE", Messagebox.OK, Messagebox.EXCLAMATION);
+        } else {
+            Messagebox.show("Input value is an integer", "FALSE", Messagebox.OK, Messagebox.EXCLAMATION);
+        }
+
+
+        final boolean result = myInputService.isNumberOrNot(textInput.getText());
         if (result == true) {
             Messagebox.show("Input value is an integer");
         } else {
@@ -51,26 +57,35 @@ public class CustomInputController extends DefaultWidgetController {
         }
     }
 
-    @ViewEvent(componentID = "textInput", eventName = Events.ON_CTRL_KEY)
-    public void doOperation1() throws InterruptedException {
+    @ViewEvent(componentID = "textInput", eventName = Events.ON_DOUBLE_CLICK)
+    public void doOperationOne() throws InterruptedException {
 
-        final boolean result = customInputService.isNumberOrNot(textInput.getText());
+        final boolean result = myInputService.isNumberOrNot(textInput.getText());
         if (result == true) {
             Messagebox.show("Input value is an integer");
         } else {
             Messagebox.show("Input value is not an integer nor a number");
         }
+    }
+
+    public boolean isNumberOrNot(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (final NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
 
 
     // TEST
-
     public void initialize(Component component) {
 
         System.out.println("Initialize invoked");
 
         super.initialize(component);
+        this.initializeTitle();
         this.initializePagingContainer(component);
     }
 
@@ -93,7 +108,6 @@ public class CustomInputController extends DefaultWidgetController {
         } else {
             this.getTitleDelegateController().updateTitle(pageable.getTypeCode(), pageable.getTotalCount());
         }
-
     }
 
     public TypedSettingsMap getWidgetSettings() {
