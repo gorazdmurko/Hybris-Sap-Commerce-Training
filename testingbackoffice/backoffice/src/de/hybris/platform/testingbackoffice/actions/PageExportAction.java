@@ -6,32 +6,39 @@ import com.hybris.cockpitng.actions.CockpitAction;
 import com.hybris.cockpitng.core.model.WidgetModel;
 import com.hybris.cockpitng.dataaccess.facades.permissions.PermissionFacade;
 import com.hybris.cockpitng.engine.impl.AbstractComponentWidgetAdapterAware;
-import com.hybris.cockpitng.search.data.pageable.Pageable;
 import com.hybris.cockpitng.search.data.pageable.PageableList;
 import com.hybris.cockpitng.util.type.BackofficeTypeUtils;
 import de.hybris.platform.core.model.ItemModel;
+import de.hybris.platform.europe1.model.PriceRowModel;
 import de.hybris.platform.servicelayer.type.TypeService;
 import de.hybris.platform.util.Config;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang3.StringUtils;
 import org.zkoss.zul.Messagebox;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.annotation.Resource;
+import com.hybris.cockpitng.search.data.pageable.Pageable;
+
 import java.util.*;
 
-public class ExportAction extends AbstractComponentWidgetAdapterAware implements CockpitAction<String, Pageable<? extends ItemModel>> {
+public class PageExportAction extends AbstractComponentWidgetAdapterAware implements CockpitAction<String, Pageable<? extends ItemModel>> {
 
     @Resource
-    private BackofficeTypeUtils backofficeTypeUtils;
-    @Resource
     private TypeService typeService;
+
     @Resource
     private PermissionFacade permissionFacade;
 
-    @Override
-    public ActionResult<Pageable<? extends ItemModel>> perform(ActionContext<String> ctx) {
+    @Resource
+    private BackofficeTypeUtils backofficeTypeUtils;
 
-        ActionResult<Pageable<? extends ItemModel>> result = new ActionResult("error");
+
+
+    @Override
+    public ActionResult<Pageable<? extends ItemModel>> perform(final ActionContext<String> ctx) {
+
+        ActionResult<Pageable<? extends ItemModel>> result = new ActionResult<>("error");
 
         this.getData(ctx).ifPresent( (exportData) -> {
 
@@ -77,7 +84,6 @@ public class ExportAction extends AbstractComponentWidgetAdapterAware implements
             result.setData(exportData);
 
 
-
             // TEST (it works) - delete after
             System.out.println("\n\nLIST");
             List arrayList = new ArrayList();
@@ -92,11 +98,32 @@ public class ExportAction extends AbstractComponentWidgetAdapterAware implements
             }
         });
 
-        return result;      // wizard message: missing excel export configuration
+
+        System.out.println("\n\nPage Export action invoked");
+        System.out.println("Context: " + ctx);
+        System.out.println("Context class: " + ctx.getClass());
+        System.out.println("Context params: " + ctx.getParameters());
+        System.out.println("EXPORT CONTEXT DATA: " + ctx.getData());
+        // System.out.println("Context data class: " + ctx.getData().getClass());
+
+        Messagebox.show(result.getData() + " (" + result.getResultCode() + ")");
+
+        System.out.println("\nRESULT: " + result);
+        System.out.println("RESULT CODE: " + result.getResultCode());
+        System.out.println("RESULT DATA: " + result.getData());
+        System.out.println("RESULT DATA RESULTS: " + result.getData().getAllResults());
+        System.out.println("RESULT MESSAGE: " + result.getResultMessage());
+        System.out.println("RESULT OUTPUT: " + result.getOutputsToSend());
+        System.out.println("RESULT STATUS FLAG: " + result.getStatusFlags());
+        System.out.println("RESULT SOCKET: " + result.getSocketAfterOperation());
+        System.out.println("RESULT CLASS: " + result.getClass());
+
+        return result;
     }
 
     @Override
-    public boolean canPerform(ActionContext<String> ctx) {
+    public boolean canPerform(final ActionContext<String> ctx) {
+
         String typeCode = StringUtils.isNotBlank(ctx.getData()) ? ctx.getData() : this.getSelectedItemsType(ctx).orElse("");
         boolean perform = StringUtils.isNotEmpty(typeCode) && this.typeService.isAssignableFrom("Item", typeCode) && this.permissionFacade.canReadType(typeCode);
 
@@ -106,6 +133,8 @@ public class ExportAction extends AbstractComponentWidgetAdapterAware implements
         return true;    // return perform;
     }
 
+
+    // helper functions
     protected void showMaxRowsExceeded(ActionContext<String> ctx, int rows) {
         Messagebox.show(ctx.getLabel("export.max.rows.exceeded.msg", new Integer[]{rows, this.getExportMaxRows(ctx)}), ctx.getLabel("export.max.rows.exceeded.title"), 1, "z-messagebox-icon z-messagebox-exclamation");
     }
@@ -166,15 +195,4 @@ public class ExportAction extends AbstractComponentWidgetAdapterAware implements
     public BackofficeTypeUtils getBackofficeTypeUtils() {
         return this.backofficeTypeUtils;
     }
-
-
-//    @Override
-//    public boolean needsConfirmation(ActionContext<String> ctx) {
-//        return CockpitAction.super.needsConfirmation(ctx);
-//    }
-//
-//    @Override
-//    public String getConfirmationMessage(ActionContext<String> ctx) {
-//        return CockpitAction.super.getConfirmationMessage(ctx);
-//    }
 }

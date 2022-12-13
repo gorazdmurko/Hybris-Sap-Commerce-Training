@@ -5,6 +5,8 @@ import de.hybris.platform.testingcore.dao.ITestingOccApiDao;
 import de.hybris.platform.testingcore.dao.impl.TestingOccApiDaoImpl;
 import de.hybris.platform.testingcore.service.ITestingOccApiService;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -53,6 +55,13 @@ public class TestingOccApiService implements ITestingOccApiService {
     private Object getRecordToPrint(final CustomerModel customerModel) {
 
         return customerModel.getCustomerID() + "--" + customerModel.getName() + "--" + customerModel.getOriginalUid();
+    }
+
+    // just fo TEST, just for FUN ;-)
+    private void checkContextTEST() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("testingcore-spring.xml");
+        TestingOccApiDaoImpl dao = (TestingOccApiDaoImpl)applicationContext.getBean("testingWebServicesDao");
+        System.out.println(dao);
     }
 
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/test")
 public class TestPageController extends AbstractPageController {
 
-    private static final String TEST_CMS_PAGE = "testCMSPage";  // inserted w/impex in 3. step
+    private static final String TEST_CMS_PAGE = "testCMSPage";  // inserted w/impex in 3. step !!
 
     @RequestMapping(method = RequestMethod.GET)
     public String getTest(final Model model) throws CMSItemNotFoundException {

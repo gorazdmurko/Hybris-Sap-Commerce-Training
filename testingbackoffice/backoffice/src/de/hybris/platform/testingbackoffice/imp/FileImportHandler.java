@@ -117,7 +117,7 @@ public class FileImportHandler implements FlowActionHandler {
                 }
 
                 getNotificationService().notifyUser("fileImport","FileImportSuccess",NotificationEvent.Level.SUCCESS);
-                adapter.done();// finish process and close the wizard
+                adapter.done(); // finish process and close the wizard
 
             }
             if (dataFile == null) {

@@ -345,6 +345,7 @@
 		</y:actions>
 	</context>
 
+	<!-- PAGEABLE -->
 	<!-- 7. PRODUCTS action - EXPORT PRODUCTS TEST -->
 	<context component="listviewactions" type="Product">
 		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
@@ -426,7 +427,10 @@
 					<wizard:property-list>
 						<wizard:property qualifier="fileForm.importFile"
 										 type="com.hybris.cockpitng.editor.defaultfileupload.FileUploadResult"
-										 editor="com.hybris.cockpitng.editor.dndfileupload" validate="false">
+										 editor="com.hybris.cockpitng.editor.dndfileupload" validate="false">	<!-- multidndfileupload ~~ select multiple files -->
+							<!-- https://answers.sap.com/questions/12767325/overwriting-defaultbooleaneditor.html -->
+							<!-- \bin\modules\backoffice-framework\backoffice\web\webroot\WEB-INF\lib\cockpit-standard-editors-20.11.18-RC1.jar!\cockpitng\widgets\editors -->
+							<!-- \bin\modules\backoffice-framework\backoffice\web\webroot\WEB-INF\lib\cockpit-standard-editors-20.11.18-RC1.jar!\META-INF\standard-editors-spring.xml -->
 							<wizard:editor-parameter>
 								<wizard:name>accept</wizard:name>
 								<wizard:value>application/xml</wizard:value>
@@ -537,7 +541,6 @@
 				</wizard:content>
 				<wizard:navigation id="step1.navigation">
 					<wizard:cancel/>
-					<wizard:next/>
 					<wizard:custom label="excel.export.wizard.button.label" handler="exportHandler" />
 					<!-- visible="exportForm.attributesForm.hasSelectedAttributes()"/> -->
 				</wizard:navigation>
@@ -579,6 +582,47 @@
 				<!-- OUT ~ OF ~ THE ~ BOX ~ ACTIONS -->
 			</y:group>
 		</y:actions>
+	</context>
+
+
+	<!-- page export action + wizard -->
+	<context merge-by="module" component="listviewactions" type="PriceRow">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="pageExport" show-group-header="false" show-separator="true">
+				<y:label>actiongroup.pageExport</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.pageExport" property="pageable">			<!-- check it -->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.pageExport" property="typeCode">-->	<!-- default -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.label.export.name</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- EXPORT PRODUCTS TEST WIZARD -->
+	<!-- wizard message: missing excel export configuration !!! -->
+	<context type="GenericItem" component="pageExport-wizard-test">
+		<wizard:flow id="exportWizard" title="excel.export.wizard.title" show-breadcrumb="false" size="large">
+			<wizard:prepare id="exportWizardPrepare">
+				<wizard:initialize property="exportForm" template-bean="exportWizardForm"/>
+				<wizard:initialize property="exportForm.attributesForm" template-bean="attributesForm"/>
+				<wizard:assign property="exportForm.pageable" value="ctx.exportData"/>
+				<wizard:assign property="exportForm.typeCode" value="ctx.TYPE_CODE"/>
+			</wizard:prepare>
+			<wizard:step id="step1" label="excel.export.wizard.attributes.label" sublabel="excel.export.wizard.attributes.sublabel">	<!-- Products' Attributes -->
+				<wizard:content id="step1.content">
+					<wizard:custom-view lang="zul">
+						<wizard:renderer spring-bean="excelExportRenderer"/>
+					</wizard:custom-view>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel/>
+					<wizard:custom label="excel.export.wizard.button.label" handler="exportHandler" />
+					<!-- visible="exportForm.attributesForm.hasSelectedAttributes()"/> -->
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
 	</context>
 
 

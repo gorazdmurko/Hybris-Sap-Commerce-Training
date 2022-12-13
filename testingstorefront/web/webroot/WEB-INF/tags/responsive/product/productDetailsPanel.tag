@@ -5,11 +5,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="product-details page-title">
+
+	<div class="productDetailsInfoSlot">
+		<cms:pageSlot position="productDetailsInfoSlot" var="feature">	<!-- 'position' of 'productDetailsContentSlot' specified in 'ContentSlotForPage' IMPEX -->
+			<cms:component component="${feature}"></cms:component>
+		</cms:pageSlot>
+	</div>
+
 	<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
 		<div class="name">${fn:escapeXml(product.name)}<span class="sku">ID</span><span class="code">${fn:escapeXml(product.code)}</span></div>
 	</ycommerce:testId>
 	<product:productReviewSummary product="${product}" showLinks="true"/>
 </div>
+
 <div class="row">
 	<div class="col-xs-10 col-xs-push-1 col-sm-6 col-sm-push-0 col-lg-4">
 		<product:productImagePanel galleryImages="${galleryImages}" />

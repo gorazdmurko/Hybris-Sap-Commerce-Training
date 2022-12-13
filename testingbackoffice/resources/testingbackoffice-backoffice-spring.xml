@@ -34,10 +34,6 @@
 	<alias name="defaultMultipleSelectWizardForm" alias="multipleSelectWizardForm" />
 	<bean id="defaultMultipleSelectWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.MultipleProductsSelectWizardForm" />
 
-	<!-- EXPORT WIZARD FORM -->
-	<alias name="defaultExportWizardForm" alias="exportWizardForm" />
-	<bean id="defaultExportWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.ExportWizardForm" />
-
 	<!-- validation -->
 	<alias name="defaultFileImportValidationResultRenderer" alias="fileImportValidationResultRenderer" />
 	<bean id="defaultFileImportValidationResultRenderer" class="de.hybris.platform.testingbackoffice.imp.FileValidationResultRenderer">
@@ -63,9 +59,13 @@
 	<alias name="defaultMultiselectHandler" alias="multiselectHandler" />
 	<bean id="defaultMultiselectHandler" class="de.hybris.platform.testingbackoffice.imp.MultiselectHandler" />
 
-	<!-- export HANDLER -->
+
+	<!-- EXPORT WIZARD FORM -->
+	<alias name="defaultExportWizardForm" alias="exportWizardForm" />
+	<bean id="defaultExportWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.ExportWizardForm" />
+	<!-- EXPORT HANDLER -->
 	<alias name="defaultExportHandler" alias="exportHandler" />
-	<bean name="defaultExportHandler" class="de.hybris.platform.testingbackoffice.imp.ExportHandler" />
+	<bean id="defaultExportHandler" class="de.hybris.platform.testingbackoffice.imp.ExportHandler" />
 
 
 	<!-- custom mySearch widget service -->

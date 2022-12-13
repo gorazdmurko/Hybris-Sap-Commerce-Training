@@ -38,7 +38,6 @@ public class TestingOccApiDaoImpl extends AbstractItemDao implements ITestingOcc
         final SearchResult result = getFlexibleSearchService().search(QUERY_ID, params);
 
         return result.getCount() > 0 ? (CustomerModel) result.getResult().get(0) : null;
-
     }
 
     // 2. returns only first customer by name (because it does not return a List)

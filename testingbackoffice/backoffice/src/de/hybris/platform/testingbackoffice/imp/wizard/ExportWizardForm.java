@@ -2,7 +2,6 @@ package de.hybris.platform.testingbackoffice.imp.wizard;
 
 import com.hybris.backoffice.attributechooser.AttributeChooserForm;
 import com.hybris.backoffice.excel.data.SelectedAttribute;
-import com.hybris.backoffice.excel.export.wizard.ExcelExportWizardForm;
 import com.hybris.cockpitng.search.data.pageable.Pageable;
 import de.hybris.platform.core.model.ItemModel;
 
@@ -20,6 +19,7 @@ public class ExportWizardForm {
     private boolean exportTemplate;
 
     public ExportWizardForm() {
+        System.out.println("FileExportWizardForm constructor invoked");
     }
 
     public Pageable<ItemModel> getPageable() {
