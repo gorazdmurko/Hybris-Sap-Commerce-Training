@@ -152,6 +152,22 @@
 			</attributes>
 		</itemtype>
 
+		<itemtype code="CustomParagraphComponent" generate="true" autocreate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent" extends="CMSParagraphComponent">
+			<attributes>
+				<attribute qualifier="headerSection" generate="true" autocreate="true" type="localized:java.lang.String">
+					<persistence type="property" />
+					<defaultvalue>Custom Paragraph Header</defaultvalue>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="footerSection" generate="true" autocreate="true" type="localized:java.lang.String">
+					<persistence type="property" />
+					<defaultvalue>Custom Paragraph Footer</defaultvalue>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
 
 
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 4 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

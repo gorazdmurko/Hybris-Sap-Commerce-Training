@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 1.12.2022 8:18:43                           ---
+ * --- Generated at 16.12.2022 18:07:23                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -24,6 +24,7 @@ public class GeneratedTestingcoreConstants
 	public static class TC
 	{
 		public static final String ABCENUM = "AbcEnum".intern();
+		public static final String CUSTOMPARAGRAPHCOMPONENT = "CustomParagraphComponent".intern();
 		public static final String EXTERNALTOKEN = "ExternalToken".intern();
 		public static final String HYBRISTUBEEMAILPROCESS = "HybrisTubeEmailProcess".intern();
 		public static final String SOCIALSITE = "SocialSite".intern();

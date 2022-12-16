@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 1.12.2022 8:18:43                           ---
+ * --- Generated at 16.12.2022 18:07:23                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -28,6 +28,7 @@ import de.hybris.platform.testingcore.constants.TestingcoreConstants;
 import de.hybris.platform.testingcore.jalo.ExternalToken;
 import de.hybris.platform.testingcore.jalo.SocialSite;
 import de.hybris.platform.testingcore.jalo.TrainingProduct;
+import de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent;
 import de.hybris.platform.testingcore.jalo.components.TrainingVideoComponent;
 import de.hybris.platform.testingcore.jalo.custom.HybrisTubeEmailProcess;
 import de.hybris.platform.testingcore.jalo.custom.TrainingEmailProcess;
@@ -82,6 +83,32 @@ public abstract class GeneratedTestingcoreManager extends Extension
 			ret.putAll(attr);
 		}
 		return ret;
+	}
+	
+	public CustomParagraphComponent createCustomParagraphComponent(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( TestingcoreConstants.TC.CUSTOMPARAGRAPHCOMPONENT );
+			return (CustomParagraphComponent)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating CustomParagraphComponent : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public CustomParagraphComponent createCustomParagraphComponent(final Map attributeValues)
+	{
+		return createCustomParagraphComponent( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public ExternalToken createExternalToken(final SessionContext ctx, final Map attributeValues)

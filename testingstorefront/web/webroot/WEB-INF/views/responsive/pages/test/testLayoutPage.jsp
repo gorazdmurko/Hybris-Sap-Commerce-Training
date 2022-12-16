@@ -11,6 +11,12 @@
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags" %>
 
 <template:page pageTitle="${pageTitle}">
-    <cms:pageSlot position="testParagraph" var="feature" element="div" class="testBannerParagraph" />
+    <cms:pageSlot position="testParagraph" var="feature" element="div" class="testBannerParagraph" />       <!-- 'position' of testParagraph in IMPEX step 4 -->
+    <cms:component component="${feature}" />
+
+    <cms:pageSlot position="customParagraph" var="feature" element="div" class="testBannerParagraph" />       <!-- 'position' of customParagraph in IMPEX step 4 -->
+    <cms:component component="${feature}" />
+
+    <cms:pageSlot position="customVideo" var="feature" element="div" class="testBannerParagraph" />       <!-- 'position' of customParagraph in IMPEX step 4 -->
     <cms:component component="${feature}" />
 </template:page>

@@ -18,9 +18,16 @@
                 src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}"
             >
             </iframe>
+            <h1>Video id: ${videoId}</h1>
+            <h2>Width: ${width}</h2>
+            <h2>Height: ${height}</h2>
+            <h2>Autoplay: ${autoPlay}</h2>
+            <h2>Show controls: ${showControls}</h2>
         </div>
     </body>
 </html>
+
+
 
 
 <%--
@@ -30,10 +37,8 @@
     $contentCatalogName=Electronics Content Catalog
     $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
 
-
     INSERT_UPDATE TrainingVideoComponent;$contentCV[unique=true];uid[unique=true];name;width;height;videoId;autoPlay;showControls;&componentRef
     ;;HomePageVideoCMSComponent;Our First CMS Component;1250;500;3XK9Ea9Idc0;false;true;HomePageVideoCMSComponent
-
 
     UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
     ;;Section1Slot-Homepage;true;HomePageVideoCMSComponent
