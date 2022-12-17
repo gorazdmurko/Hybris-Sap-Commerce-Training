@@ -12,6 +12,7 @@
 </head>
 <body>
     <div>
+<%--        <h4>Hello: ${name1} ${namne2}, ${age}</h4>--%>
         <h1>Header: ${headerSection}</h1>
         <hr />
         <h3>Content: ${content}</h3>

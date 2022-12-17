@@ -152,8 +152,10 @@
 			</attributes>
 		</itemtype>
 
-		<itemtype code="CustomParagraphComponent" generate="true" autocreate="true"
-				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent" extends="CMSParagraphComponent">
+		<itemtype code="CustomParagraphComponent"
+				  extends="CMSParagraphComponent"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent"
+				  abstract="false">
 			<attributes>
 				<attribute qualifier="headerSection" generate="true" autocreate="true" type="localized:java.lang.String">
 					<persistence type="property" />

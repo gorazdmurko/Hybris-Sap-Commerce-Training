@@ -20,9 +20,15 @@ public class CustomParagraphCMSComponentController extends AbstractCMSComponentC
     @Override
     protected void fillModel(HttpServletRequest request, Model model, CustomParagraphComponentModel component) {
         LOG.info("fillModel() from CustomParagraphCMSComponentController was invoked.");
+
         model.addAttribute("headerSection", component.getHeaderSection());
         model.addAttribute("content", component.getContent());
         model.addAttribute("footerSection", component.getFooterSection());
+
+        model.addAttribute("name1", "G.");
+        model.addAttribute("name2", "M.");
+        model.addAttribute("age", 39);
+
         System.out.println("fillModel() from CustomParagraphCMSComponentController was invoked.");
     }
 
