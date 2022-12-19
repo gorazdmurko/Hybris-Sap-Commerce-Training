@@ -155,17 +155,28 @@
 		<itemtype code="CustomParagraphComponent"
 				  extends="CMSParagraphComponent"
 				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent"
-				  abstract="false">
+				  abstract="false">	<!-- because parent is already abstract -->
 			<attributes>
-				<attribute qualifier="headerSection" generate="true" autocreate="true" type="localized:java.lang.String">
+<!--				<attribute qualifier="headerSection" generate="true" autocreate="true" type="localized:java.lang.String">-->
+				<attribute qualifier="headerSection" type="localized:java.lang.String">
 					<persistence type="property" />
 					<defaultvalue>Custom Paragraph Header</defaultvalue>
 					<modifiers optional="true" />
 				</attribute>
-				<attribute qualifier="footerSection" generate="true" autocreate="true" type="localized:java.lang.String">
+<!--				<attribute qualifier="footerSection" generate="true" autocreate="true" type="localized:java.lang.String">-->
+				<attribute qualifier="footerSection" type="localized:java.lang.String">
 					<persistence type="property" />
 					<defaultvalue>Custom Paragraph Footer</defaultvalue>
 					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="TrainingOldCartRemovalJob" extends="CronJob">
+			<attributes>
+				<attribute qualifier="hours" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
 				</attribute>
 			</attributes>
 		</itemtype>

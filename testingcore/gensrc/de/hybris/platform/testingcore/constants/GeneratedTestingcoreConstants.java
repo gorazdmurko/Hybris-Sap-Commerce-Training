@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 17.12.2022 9:28:22                          ---
+ * --- Generated at 19.12.2022 14:30:36                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -30,6 +30,7 @@ public class GeneratedTestingcoreConstants
 		public static final String SOCIALSITE = "SocialSite".intern();
 		public static final String SOCIALSITEENUMTYPE = "SocialSiteEnumType".intern();
 		public static final String TRAININGEMAILPROCESS = "TrainingEmailProcess".intern();
+		public static final String TRAININGOLDCARTREMOVALJOB = "TrainingOldCartRemovalJob".intern();
 		public static final String TRAININGPRODUCT = "TrainingProduct".intern();
 		public static final String TRAININGVIDEOCOMPONENT = "TrainingVideoComponent".intern();
 	}

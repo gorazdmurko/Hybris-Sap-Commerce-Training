@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 17.12.2022 9:28:22                          ---
+ * --- Generated at 19.12.2022 14:30:36                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -27,6 +27,7 @@ import de.hybris.platform.jalo.user.User;
 import de.hybris.platform.testingcore.constants.TestingcoreConstants;
 import de.hybris.platform.testingcore.jalo.ExternalToken;
 import de.hybris.platform.testingcore.jalo.SocialSite;
+import de.hybris.platform.testingcore.jalo.TrainingOldCartRemovalJob;
 import de.hybris.platform.testingcore.jalo.TrainingProduct;
 import de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent;
 import de.hybris.platform.testingcore.jalo.components.TrainingVideoComponent;
@@ -213,6 +214,32 @@ public abstract class GeneratedTestingcoreManager extends Extension
 	public TrainingEmailProcess createTrainingEmailProcess(final Map attributeValues)
 	{
 		return createTrainingEmailProcess( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public TrainingOldCartRemovalJob createTrainingOldCartRemovalJob(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( TestingcoreConstants.TC.TRAININGOLDCARTREMOVALJOB );
+			return (TrainingOldCartRemovalJob)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating TrainingOldCartRemovalJob : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public TrainingOldCartRemovalJob createTrainingOldCartRemovalJob(final Map attributeValues)
+	{
+		return createTrainingOldCartRemovalJob( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public TrainingProduct createTrainingProduct(final SessionContext ctx, final Map attributeValues)

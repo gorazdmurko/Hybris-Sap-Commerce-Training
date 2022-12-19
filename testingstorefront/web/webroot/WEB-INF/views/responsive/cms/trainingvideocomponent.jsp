@@ -10,19 +10,27 @@
     <head>
         <title>Video Component</title>
     </head>
+
     <body>
-        <div>
-            <iframe
-                width="${width}"
-                height="${height}"
-                src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}"
-            >
-            </iframe>
-            <h1>Video id: ${videoId}</h1>
-            <h2>Width: ${width}</h2>
-            <h2>Height: ${height}</h2>
-            <h2>Autoplay: ${autoPlay}</h2>
-            <h2>Show controls: ${showControls}</h2>
+        <div class="container" style="background-color: #eee;">
+            <div>
+                <hr />
+                <h1 style="color: violet;">TRAINING VIDEO COMPONENT</h1>
+            </div>
+
+            <div class="custom-video">
+                <iframe
+                        width="${width}"
+                        height="${height}"
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}"
+                >
+                </iframe>
+                <h1>Video id: ${videoId}</h1>
+                <h2>Width: ${width}</h2>
+                <h2>Height: ${height}</h2>
+                <h2>Autoplay: ${autoPlay}</h2>
+                <h2>Show controls: ${showControls}</h2>
+            </div>
         </div>
     </body>
 </html>

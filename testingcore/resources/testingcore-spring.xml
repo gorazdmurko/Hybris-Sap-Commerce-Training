@@ -77,6 +77,32 @@
     </bean>
 
 
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CRONJOBS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- 1 -->
+    <alias name="testingProductListDao" alias="productListDao" />
+    <bean id="testingProductListDao" class="de.hybris.platform.testingcore.dao.impl.ProductListResultDaoImpl" parent="defaultProductDao" />
+
+    <bean id="customerListJobPerformable"
+          class="de.hybris.platform.testingcore.job.CustomerListJobPerformable"
+          parent="abstractJobPerformable">
+        <property name="customerDao" ref="testingWebServicesDao" />
+    </bean>
+    <bean id="productListJobPerformable"
+          class="de.hybris.platform.testingcore.job.ProductListJobPerformable"
+          parent="abstractJobPerformable">
+        <property name="productDao" ref="productListDao" />
+    </bean>
+
+    <!-- 2 -->
+    <alias name="customFindAllCartsDao" alias="findAllCartsDao" />
+    <bean id="customFindAllCartsDao" class="de.hybris.platform.testingcore.dao.impl.FindOldCartsDaoImpl" />
+
+    <bean id="customTrainingCartRemovalJob"
+          class="de.hybris.platform.testingcore.job.TrainingCartRemovalJob"
+          parent="abstractJobPerformable">
+        <property name="findOldCartsDao" ref="findAllCartsDao" />
+    </bean>
+
 
 
 
