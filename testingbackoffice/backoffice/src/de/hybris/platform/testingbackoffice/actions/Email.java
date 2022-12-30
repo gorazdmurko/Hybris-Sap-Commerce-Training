@@ -11,6 +11,8 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Email extends AbstractComponentWidgetAdapterAware implements CockpitAction<String, String> {
 
@@ -42,26 +44,27 @@ public class Email extends AbstractComponentWidgetAdapterAware implements Cockpi
         int messageBox = Messagebox.show("Are you sure to test the Messagebox buttons?",
                 "Question", Messagebox.OK | Messagebox.IGNORE | Messagebox.CANCEL,
                 "Messagebox.QUESTION is an object",
-                new EventListener() {
-                    public void onEvent(Event e) {
-                        // TODO: connect events with some functionality!!
-                        if (Messagebox.ON_OK.equals(e.getName())){
-                            // OK is clicked
-                            System.out.println("OK button was clicked");
-                            System.out.println("Event name: " + e.getName());   // onOK
-                        } else if(Messagebox.ON_CANCEL.equals(e.getName())){
-                            // Cancel is clicked
-                            System.out.println("CANCEL button was clicked");
-                            System.out.println("Event name: " + e.getName());   // onCancel
-                        } else {
-                            // Ignore is clicked
-                            System.out.println("IGNORE button was clicked");    // onIgnore
-                            System.out.println("Event name: " + e.getName());
-                        }
+            new EventListener() {
+                public void onEvent(Event e) {
+                    // TODO: connect events with some functionality!!
+                    if (Messagebox.ON_OK.equals(e.getName())){
+                        // OK is clicked
+                        System.out.println("OK button was clicked");
+                        System.out.println("Event name: " + e.getName());   // onOK
+                    } else if(Messagebox.ON_CANCEL.equals(e.getName())){
+                        // Cancel is clicked
+                        System.out.println("CANCEL button was clicked");
+                        System.out.println("Event name: " + e.getName());   // onCancel
+                    } else {
+                        // Ignore is clicked
+                        System.out.println("IGNORE button was clicked");    // onIgnore
+                        System.out.println("Event name: " + e.getName());
                     }
-                    // OK = 1, CANCEL = 2
                 }
+                // OK = 1, CANCEL = 2
+            }
         );
+
         System.out.println("Message box id: " + messageBox);
         if (messageBox == 1) {
             System.out.println("Process continues!");

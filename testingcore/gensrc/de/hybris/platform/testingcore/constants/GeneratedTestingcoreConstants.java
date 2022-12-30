@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 19.12.2022 14:30:36                         ---
+ * --- Generated at 20.12.2022 15:36:24                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -27,6 +27,7 @@ public class GeneratedTestingcoreConstants
 		public static final String CUSTOMPARAGRAPHCOMPONENT = "CustomParagraphComponent".intern();
 		public static final String EXTERNALTOKEN = "ExternalToken".intern();
 		public static final String HYBRISTUBEEMAILPROCESS = "HybrisTubeEmailProcess".intern();
+		public static final String NEWCUSTOMTRAININGACTION = "NewCustomTrainingAction".intern();
 		public static final String SOCIALSITE = "SocialSite".intern();
 		public static final String SOCIALSITEENUMTYPE = "SocialSiteEnumType".intern();
 		public static final String TRAININGEMAILPROCESS = "TrainingEmailProcess".intern();

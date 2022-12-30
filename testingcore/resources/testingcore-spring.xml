@@ -41,17 +41,17 @@
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL PROCESS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- 1. HYBRIS TUBE -->
-    <!-- a) PROCESS == give mapping of HybrisTubeEmailProcess file -->
+    <!-- a) PROCESS MAPPING == give mapping of HybrisTubeEmailProcess file -->
     <bean id="hybrisTubeEmailProcessDefinitionResource"
           class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >   <!-- see ProcessDefinitionResource class -->
         <property name="resource" value="classpath:/testingcore/processes/hybrisTubeEmailProcess.xml"/>
     </bean>
-    <!-- b) ACTION == give mapping to generateHybrisTubeEmailAction -->
+    <!-- b) ACTION MAPPING == give mapping to generateHybrisTubeEmailAction -->
     <bean id="generateHybrisTubeEmailAction" parent="abstractGenerateEmailAction">
         <property name="frontendTemplateName" value="HybrisTubeEmailTemplate"/>
         <!-- HybrisTubeEmailTemplate picked from the IMPEX !! -->
     </bean>
-    <!-- c) EVENT LISTENER == mapping of HybrisTubeEmailEventListener class -->
+    <!-- c) EVENT LISTENER MAPPING == mapping of HybrisTubeEmailEventListener class -->
     <bean id="hybrisTubeEmailEventListener"
           class="de.hybris.platform.testingcore.event.HybrisTubeEmailEventListener" parent="abstractAcceleratorSiteEventListener">
         <property name="modelService" ref="modelService"/>
@@ -59,17 +59,17 @@
     </bean>
 
     <!-- 2. TRAINING -->
-    <!-- a) PROCESS mapping to TrainingEmailProcess -->
+    <!-- a) PROCESS MAPPING to TrainingEmailProcess -->
     <bean id="trainingEmailProcessDefinitionResource"
           class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">    <!-- see ProcessDefinitionResource class -->
         <property name="resource" value="classpath:/testingcore/processes/trainingEmailProcess.xml" />
     </bean>
-    <!-- b) ACTION mapping to generateTrainingEmailAction -->
+    <!-- b) ACTION MAPPING to generateTrainingEmailAction -->
     <bean id="generateTrainingEmailAction" parent="abstractGenerateEmailAction">
         <property name="frontendTemplateName" value="TrainingEmailTemplate" />
         <!-- TrainingEmailTemplate picked from the IMPEX !! -->
     </bean>
-    <!-- c) LISTENER mapping of TrainingEmailEventListener class -->
+    <!-- c) LISTENER MAPPING of TrainingEmailEventListener class -->
     <bean id="trainingEmailEventListener"
           class="de.hybris.platform.testingcore.event.TrainingEmailEventListener" parent="abstractAcceleratorSiteEventListener">
         <property name="modelService" ref="modelService"/>

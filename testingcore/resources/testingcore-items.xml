@@ -182,6 +182,13 @@
 		</itemtype>
 
 
+		<itemtype code="NewCustomTrainingAction"
+				  extends="SimpleCMSAction"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.acceleratorcms.jalo.actions.MyNewAction">
+		</itemtype>
+
+
 
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 4 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 		<!-- Custom Code for training Purposes -->

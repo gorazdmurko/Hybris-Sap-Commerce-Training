@@ -27,7 +27,7 @@ public class HybrisTubeEmailEventListener extends AbstractAcceleratorSiteEventLi
 
         // START PROCESS
         getModelService().save(hybrisTubeProcessModel);
-        getBusinessProcessService().startProcess(hybrisTubeProcessModel);   // it goes to the process start="generateTrainingEmail"
+        getBusinessProcessService().startProcess(hybrisTubeProcessModel);   // it goes to the process start="generateHybrisTubeEmail"
                                                                             // which calls GenerateEmailAction
     }
 

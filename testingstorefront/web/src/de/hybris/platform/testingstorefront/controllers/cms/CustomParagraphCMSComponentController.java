@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = ControllerConstants.Actions.Cms.CustomParagraphCMSComponent)
 public class CustomParagraphCMSComponentController extends AbstractCMSComponentController<CustomParagraphComponentModel> {
 
+    protected final String COMPONENT = "component";
+    protected final String COMPONENT_UID = "componentUid";
     protected static final Logger LOG = Logger.getLogger(CustomParagraphCMSComponentController.class);
 
     @Override
@@ -25,6 +27,9 @@ public class CustomParagraphCMSComponentController extends AbstractCMSComponentC
         model.addAttribute("headerSection", component.getHeaderSection());
         model.addAttribute("content", component.getContent());
         model.addAttribute("footerSection", component.getFooterSection());
+
+        String componentUid = request.getParameter(COMPONENT_UID);
+        LOG.info("Component uid: " + componentUid);
     }
 
     @Override

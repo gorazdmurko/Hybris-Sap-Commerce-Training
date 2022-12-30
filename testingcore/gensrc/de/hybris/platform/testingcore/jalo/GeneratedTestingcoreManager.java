@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 19.12.2022 14:30:36                         ---
+ * --- Generated at 20.12.2022 15:36:24                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -13,6 +13,7 @@
  */
 package de.hybris.platform.testingcore.jalo;
 
+import de.hybris.platform.acceleratorcms.jalo.actions.MyNewAction;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -162,6 +163,32 @@ public abstract class GeneratedTestingcoreManager extends Extension
 	public HybrisTubeEmailProcess createHybrisTubeEmailProcess(final Map attributeValues)
 	{
 		return createHybrisTubeEmailProcess( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public MyNewAction createNewCustomTrainingAction(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( TestingcoreConstants.TC.NEWCUSTOMTRAININGACTION );
+			return (MyNewAction)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating NewCustomTrainingAction : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public MyNewAction createNewCustomTrainingAction(final Map attributeValues)
+	{
+		return createNewCustomTrainingAction( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public SocialSite createSocialSite(final SessionContext ctx, final Map attributeValues)

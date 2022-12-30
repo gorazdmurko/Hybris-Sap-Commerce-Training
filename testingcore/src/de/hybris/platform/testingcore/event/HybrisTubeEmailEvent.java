@@ -17,6 +17,12 @@ public class HybrisTubeEmailEvent extends AbstractCommerceUserEvent {
         setSite(site);
         setCurrency(currency);
         setLanguage(cart.getUser().getSessionLanguage());
+
+        // IT COULD ALSO BE DONE THIS WAY PROBABLY (using only 'cart')
+        // setBaseStore(cart.getStore());
+        // setSite(cart.getSite());
+        // setCurrency(cart.getCurrency());
+        // setLanguage(cart.getUser().getSessionLanguage());
     }
 
     public AbstractOrderModel getCart() {

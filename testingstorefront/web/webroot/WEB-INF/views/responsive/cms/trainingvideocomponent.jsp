@@ -6,7 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="action" tagdir="/WEB-INF/tags/responsive/action" %>
+
 <html>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <head>
         <title>Video Component</title>
     </head>
@@ -18,23 +21,23 @@
                 <h1 style="color: violet;">TRAINING VIDEO COMPONENT</h1>
             </div>
 
+            <div>
+                <action:actions element="div" parentComponent="${component}" />
+                <hr />
+            </div>
+
             <div class="custom-video">
+<%--                <iframe width="${width}" height="${height}" src="${videoUrl}"></iframe>--%>
                 <iframe
                         width="${width}"
                         height="${height}"
                         src="https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${showControls}"
                 >
                 </iframe>
-                <h1>Video id: ${videoId}</h1>
-                <h2>Width: ${width}</h2>
-                <h2>Height: ${height}</h2>
-                <h2>Autoplay: ${autoPlay}</h2>
-                <h2>Show controls: ${showControls}</h2>
             </div>
         </div>
     </body>
 </html>
-
 
 
 

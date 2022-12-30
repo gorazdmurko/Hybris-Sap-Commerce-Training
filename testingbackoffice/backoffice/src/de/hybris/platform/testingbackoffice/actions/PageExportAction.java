@@ -9,10 +9,8 @@ import com.hybris.cockpitng.engine.impl.AbstractComponentWidgetAdapterAware;
 import com.hybris.cockpitng.search.data.pageable.PageableList;
 import com.hybris.cockpitng.util.type.BackofficeTypeUtils;
 import de.hybris.platform.core.model.ItemModel;
-import de.hybris.platform.europe1.model.PriceRowModel;
 import de.hybris.platform.servicelayer.type.TypeService;
 import de.hybris.platform.util.Config;
-import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang3.StringUtils;
 import org.zkoss.zul.Messagebox;
 import org.apache.commons.collections.CollectionUtils;
@@ -22,6 +20,8 @@ import com.hybris.cockpitng.search.data.pageable.Pageable;
 
 import java.util.*;
 
+// I - CONTEXT
+// O - RESULT                                                                                          I      O
 public class PageExportAction extends AbstractComponentWidgetAdapterAware implements CockpitAction<String, Pageable<? extends ItemModel>> {
 
     @Resource
@@ -33,7 +33,8 @@ public class PageExportAction extends AbstractComponentWidgetAdapterAware implem
     @Resource
     private BackofficeTypeUtils backofficeTypeUtils;
 
-
+    private String xx = "";
+    private Boolean cancel = false;
 
     @Override
     public ActionResult<Pageable<? extends ItemModel>> perform(final ActionContext<String> ctx) {

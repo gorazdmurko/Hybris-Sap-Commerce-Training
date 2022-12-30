@@ -171,8 +171,12 @@ public class CartPageController extends AbstractCartPageController
 						new HybrisTubeEmailEvent(cartModel, cartModel.getStore(),
 						cartModel.getSite(), cartModel.getCurrency()), cartModel));
 			}
-			eventService.publishEvent(initializeHybrisEvent(hybrisEvent, cartModel));
+			eventService.publishEvent(initializeHybrisEvent(hybrisEvent, cartModel));		// set by setters
+			eventService.publishEvent(hybrisEvent);											// set by constructor ??!
 
+			// NOTE THIS
+			TrainingEmailEvent trainingEvent = new TrainingEmailEvent(cartModel, cartModel.getStore(), cartModel.getSite(), cartModel.getCurrency());
+			eventService.publishEvent(trainingEvent);
 		}
 		return prepareCartUrl(model); // "pages/cart/cartPage"
 	}

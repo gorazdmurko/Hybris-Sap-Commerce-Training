@@ -5,18 +5,15 @@ import com.hybris.cockpitng.actions.ActionResult;
 import com.hybris.cockpitng.actions.CockpitAction;
 import com.hybris.cockpitng.engine.impl.AbstractComponentWidgetAdapterAware;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
-import de.hybris.platform.jalo.user.Customer;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Window;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/*
-    public interface CockpitAction<I, O> {
-        ActionResult<O> perform(ActionContext<I> var1);
-* */                                                                          //         I - CONTEXT, O - RESULT
+// I - CONTEXT
+// O - RESULT                                                                                   I      O
 public class PopupAction extends AbstractComponentWidgetAdapterAware implements CockpitAction<Object, List> {
 
     protected static final String SOCKET_OUT_SELECTED_OBJECTS = "currentObject";
@@ -34,26 +31,12 @@ public class PopupAction extends AbstractComponentWidgetAdapterAware implements 
 
             this.sendOutput(SOCKET_OUT_SELECTED_OBJECTS, actionContext.getData());
 
-            // TODO - not working yet
-//            String xml = " <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-//                    "<note>\n" +
-//                    "  <to>Tove</to>\n" +
-//                    "  <from>Jani</from>\n" +
-//                    "  <heading>Reminder</heading>\n" +
-//                    "  <body>Don't forget me this weekend!</body>\n" +
-//                    "</note> ";
-//
-//            // Escape the XML content in preparation for the ZUL file
-//            xml = StringEscapeUtils.escapeHtml(xml);
-//
-//            String template = "/widgets/actions/popup/popup-preview.zul";
-//            Window window = (Window) Executions.createComponents(template, null, Collections.singletonMap("xml", xml));
-//            window.doModal();
-
             Messagebox.show("Action successfully completed", "Confirmation popup", Messagebox.OK, Messagebox.EXCLAMATION);
 
             return new ActionResult("success");
         }
+
+        callMessageBox(actionContext);
 
         return new ActionResult("error");
     }
@@ -67,8 +50,6 @@ public class PopupAction extends AbstractComponentWidgetAdapterAware implements 
         System.out.println("POPUP DATA: " + ctx.getData());
         System.out.println("Class: " + ctx.getData().getClass());   // String
 
-        Customer customer;
-
         if (ctx.getData() instanceof String) {
             System.out.println("Instance of String");
             canPerform = true;
@@ -81,7 +62,6 @@ public class PopupAction extends AbstractComponentWidgetAdapterAware implements 
 
         System.out.println("Boolean value of PopupAction.class = " + canPerform);
 
-        // return true;
         return canPerform;
     }
 
@@ -107,5 +87,32 @@ public class PopupAction extends AbstractComponentWidgetAdapterAware implements 
         }
 
         return message;
+    }
+
+    private void callMessageBox(ActionContext<Object> actionContext) {
+        Map params = new HashMap();
+        params.put("sclass", "myMessagebox");
+        params.put("width", 500);
+        Messagebox.show("It's a customized style message box.",
+                null, null, null, Messagebox.INFORMATION, null,
+                new EventListener() {
+                    public void onEvent(Event e) {
+                        if (Messagebox.ON_OK.equals(e.getName())){
+                            // OK is clicked
+                            sendOutput(SOCKET_OUT_SELECTED_OBJECTS, actionContext.getData());
+                            System.out.println("OK button was clicked");
+                            System.out.println("Event name: " + e.getName());   // onOK
+                        } else if(Messagebox.ON_CANCEL.equals(e.getName())){
+                            // Cancel is clicked
+                            System.out.println("CANCEL button was clicked");
+                            System.out.println("Event name: " + e.getName());   // onCancel
+                        } else {
+                            // Ignore is clicked
+                            System.out.println("IGNORE button was clicked");    // onIgnore
+                            System.out.println("Event name: " + e.getName());
+                        }
+                    }
+                }, params
+        );
     }
 }
