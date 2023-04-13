@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+
+<!--
+	AFTER THAT MODIFY NEXT FILES:
+		- labels_en.properties
+		- testingbackoffice-locales_en.properties
+
+		components (editorArea, listView, gridView, dynamicForms, cockpitSearchComponent)
+		configs (advancedSearch, dashboard, explorerTree, notifications, simpleSearch, wizard-config, hybris (cockpit))
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+		xmlns:n="http://www.hybris.com/cockpitng/config/explorertree"
+		xmlns:y="http://www.hybris.com/cockpit/config/hybris"
+		xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea"
+		xmlns:list="http://www.hybris.com/cockpitng/component/listView"
+		xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch"
+		xmlns:na="http://www.hybris.com/cockpitng/config/notifications"
+		xmlns:wizard="http://www.hybris.com/cockpitng/config/wizard-config">
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ E D I T O R ~~ A R E A ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<!-- EDITOR AREA - CUSTOMER -->
+	<context merge-by="type" type="Customer" component="editor-area">			<!-- component editor-area -->
+		<editorArea:editorArea>
+			<!-- 1st tab -->
+			<editorArea:tab name="hmc.tab.customer.personal" position="3">		<!-- tab name = PERSONAL DETAILS + position -->
+				<editorArea:section name="hmc.section.customer.attributes">		<!-- section name = CUSTOMER CONTACT DETAILS -->
+					<editorArea:attribute qualifier="contactEmail" />			<!-- attributes (must be presented in CustomerModel !!) -->
+					<editorArea:attribute qualifier="originalUid" />
+					<editorArea:attribute qualifier="externalToken" />
+				</editorArea:section>
+			</editorArea:tab>
+			<!-- 2nd tab -->
+			<editorArea:tab name="hmc.tab.customer.contact" position="4">		<!-- CONTACT PREFERENCES -->
+				<editorArea:section name="hmc.section.contact.attributes">		<!-- section name = CUSTOMER CONTACT PREFERENCES -->
+					<editorArea:attribute qualifier="emailPreference" />
+					<editorArea:attribute qualifier="smsPreference" />
+				</editorArea:section>
+				<editorArea:customSection name="name.section.customer.custom"
+										  spring-bean="helloWorldCustomRenderer"
+										  description="desc.section.custom"/>	<!-- custom section -->
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+
+	<!--  type TrainingProduct created in testingcore-items.xml  -->
+	<context merge-by="type" type="TrainingProduct" parent="Product" component="editor-area">
+		<editorArea:editorArea name="">
+			<editorArea:tab name="hmc.tab.trainingProduct" position="5">
+				<editorArea:section name="hmc.section.trainingProduct.attributes">
+					<editorArea:attribute qualifier="trainingName" />				<!-- attributes (must be presented in TrainingProductModel !!) -->
+					<editorArea:attribute qualifier="trainingDescription" />
+					<editorArea:attribute qualifier="trainingDate" />
+					<editorArea:attribute qualifier="code" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	<!-- select * from {TrainingProduct} -->
+
+
+	<!-- extended Product created in testingbackoffice-items.xml  -->
+	<!-- ~~ added 3 more attributes ~~ -->
+	<context merge-by="type" type="Product" parent="GenericItem" component="editor-area" module="platformbackoffice">
+		<editorArea:editorArea name="">
+			<editorArea:tab name="hmc.tab.product.extendedAttributes" position="26">	<!-- it adds EXTENDED ATTRIBUTES tag -->
+				<editorArea:section name="hmc.section.product.ids">
+					<editorArea:attribute qualifier="productCustomerFeedback" />
+					<editorArea:attribute qualifier="productPackagingQuality" />
+					<editorArea:attribute qualifier="productContents" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ E X P L O R E R ~~ T R E E ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<context merge-by="module" component="explorer-tree">
+		<n:explorer-tree>
+			<n:navigation-node id="TrainingTree">										<!-- branch TrainingTree inside of tree -->
+				<n:type-node id="CustomTrainingTree" code="CustomTrainingTree" />		<!-- subbranch CustomTrainingTree inside of tree ** -->
+				<n:type-node id="CustomProduct" code="CustomProduct" />					<!-- subbranch CustomProduct inside of tree ** -->
+				<n:type-node id="Courses" code="Courses" />
+			</n:navigation-node>
+		</n:explorer-tree>
+	</context>
+
+	<context type="CustomTrainingTree" component="listview">							<!-- content list of selected subbranch ** -->
+		<list:list-view>																<!-- list qualifiers must match with item attributes -->
+			<list:column qualifier="code" />											<!-- see item definition in testingbackoffice-items.xml -->
+			<list:column qualifier="subject" />
+			<list:column qualifier="attachment" />
+		</list:list-view>
+	</context>
+	<context type="CustomProduct" component="listview">
+		<list:list-view>
+			<list:column qualifier="deadline" />
+			<list:column qualifier="inStock" />
+			<list:column qualifier="media" />
+		</list:list-view>
+	</context>
+	<context type="Courses" component="listview">
+		<list:list-view xmlns:list="http://www.hybris.com/cockpitng/component/listView">
+			<list:column qualifier="code"/>
+			<list:column qualifier="name"/>
+			<list:column qualifier="duration"/>
+			<list:column qualifier="amount"/>
+		</list:list-view>
+	</context>
+
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ W I Z A R D S ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- https://help.sap.com/docs/SAP_COMMERCE/5c9ea0c629214e42b727bf08800d8dfa/8bd6b110866910149666f5b05fb95681.html?version=1905&locale=en-US#loio23fa1a90f3834fa990e0b58bcf89b7f2 -->
+
+	<!-- 'create-wizard' ~~ for adding a new Course when you click the '+' button -->
+	<!-- Localization: labels & subLabels go to labels.properties, title & property names go to locales.properties -->
+	<context type="Courses" component="create-wizard">
+		<wizard:flow id="CoursesWizard" title="create.courses.title">
+			<wizard:prepare id="coursesPrepare">
+				<wizard:initialize property="newCourse" type="Courses" />		<!-- a newCourse of type Courses is being initialized -->
+				<wizard:assign property="newCourse.code" value="ctx.code" />
+			</wizard:prepare>
+
+			<wizard:step id="step1" label="create.courses.essential.label" sublabel="create.courses.essential.sublabel">
+				<wizard:info id="step1.intro" position="top" label="create.courses.essential.intro" />
+				<wizard:content id="step1.content">
+					<wizard:property-list root="newCourse">
+						<wizard:property qualifier="code" type="java.lang.String" />
+						<wizard:property qualifier="name" type="java.lang.String" />
+						<wizard:property qualifier="description" type="java.lang.String" editor="com.hybris.cockpitng.editor.wysiwyg" />
+					</wizard:property-list>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel />
+					<wizard:next visible="!#empty(newCourse.code) and newCourse.name != null" />
+					<wizard:done visible="!#empty(newCourse.code) and newCourse.name != null">
+						<wizard:save property="newCourse"/>
+					</wizard:done>
+				</wizard:navigation>
+			</wizard:step>
+
+			<wizard:step id="step2" label="create.courses.duration.label" sublabel="create.courses.duration.sublabel">
+				<wizard:info id="step2.intro" position="top" label="create.courses.duration.intro" />
+				<wizard:content id="step2.content">
+					<wizard:property-list root="newCourse">
+						<wizard:property qualifier="duration" type="java.lang.String" />
+					</wizard:property-list>
+				</wizard:content>
+				<wizard:navigation id="step2.navigation">
+					<wizard:cancel />
+					<wizard:back />
+					<wizard:next>
+						<wizard:if expression="#empty(newCourse.duration)" target="step2alternate" />
+					</wizard:next>
+					<wizard:done>
+						<wizard:save property="newCourse"/>
+					</wizard:done>
+				</wizard:navigation>
+			</wizard:step>
+
+			<wizard:step id="step3" label="create.courses.amount.label"	sublabel="create.courses.amount.sublabel">
+				<wizard:info id="step3.intro" position="top"  label="create.courses.amount.intro" />
+				<wizard:content id="step3.content">
+					<wizard:property qualifier="amount" type="java.lang.Integer" />
+				</wizard:content>
+				<wizard:navigation id="step3.navigation">
+					<wizard:cancel/>
+					<wizard:back/>
+					<wizard:done>
+						<wizard:save property="newCourse"/>
+					</wizard:done>
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
+	</context>
+	<!-- https://help.sap.com/docs/SAP_COMMERCE/5c9ea0c629214e42b727bf08800d8dfa/dc8129e8f44e44bb9100aa53602da995.html?locale=en-US&version=1905#loiodc8129e8f44e44bb9100aa53602da995 -->
+	<!--
+		!! important reference for Product creation !!
+			* platformbackoffice-backoffice-config.xml ~~ from line 319 ( ? 217 ? )
+			* calls ComposedFlowActionHandler
+	-->
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ A C T I O N S ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- 1. PRODUCT actions ~~ POPUP -->
+	<context component="listviewactions" merge-by="module" type="Product">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="popup" show-separator="true" show-group-header="true">
+				<y:label>actiongroup.popup</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.popup" property="pageable.typeCode">
+					<!-- !! changed from property="currentObject" to pageable.typeCode !! -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.popup</y:value>	<!-- popup with OPEN POPUP title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 2. PRODUCT actions ~~ IMPORT & MULTISELECT -->
+	<context component="listviewactions" merge-by="module" type="Product">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<!-- 1. group -->
+			<y:group qualifier="importFile" show-group-header="false" show-separator="true" position="40">
+				<y:label>actiongroup.importXmlFile</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.xmlProductImport" property="pageable.typeCode"
+						  position="10" />
+			</y:group>
+			<!-- 2. group -->
+			<y:group qualifier="multipleSelect" show-group-header="false" show-separator="true">
+				<!-- action **SUCCESS -->
+				<y:label>actiongroup.multipleSelect</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.multipleProductsSelectAction" property="selectedObjects"> <!-- pageable.typeCode -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.open</y:value>	<!-- popup with title OPEN WIZARD? -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 3. CUSTOMER actions - EMAIL -->
+	<context component="listviewactions" type="Customer" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="sendMail" show-group-header="false" show-separator="true">
+				<y:label>actiongroup.sendMail</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.email" property="pageable.typeCode">
+					<!-- !! property changed from pageable.contextMap to pageable.typeCode - DIDN'T WORK !! -->
+					<!-- !! next -> property changed from pageable.typeCode to selectedObjects - DIDN'T WORK !! -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.email</y:value>	<!-- popup title Confirm sending an e-mail? -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 4. CUSTOMER actions - REGISTRATION -->
+	<context merge-by="module" type="Customer" component="listviewactions">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="registrationInvite" show-group-header="false" show-separator="true">
+				<y:label>actiongroup.registrationInvite</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.SendRegistrationInviteAction" property="selectedObjects" />
+					<!-- !! property selectedObject means that action works properly only if more objects are selected !! -->
+				<y:action action-id="com.hybris.cockpitng.action.delete" property="selectedObjects" triggerOnKeys="#del"/>
+				<y:action action-id="com.hybris.cockpitng.action.create" property="pageable.typeCode" />
+				<y:action action-id="com.hybris.cockpitng.listview.action.export.csv" property="exportColumnsAndData"/>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 5. CUSTOMER actions - EDITOR AREA -->
+	<context component="editorareaactions" merge-by="module" type="Customer">	<!-- ?? parent="auto" ?? -->
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+
+			<y:group qualifier="save1" show-group-header="true" show-separator="true">
+				<y:label>actiongroup.save1</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="pageable.typeCode">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.save</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+			<!-- !!!!! can't work, because perform() accepts string but currentObject is an object (CustomerModel) !!!!! -->
+<!--			<y:group qualifier="save2" show-group-header="true" show-separator="true">-->
+<!--				<y:label>actiongroup.save2</y:label>-->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="currentObject">-->
+<!--					<y:parameter>-->
+<!--						<y:name>actionName</y:name>-->
+<!--						<y:value>testing.action.confirmation.title.save</y:value>	&lt;!&ndash; popup with title appears &ndash;&gt;-->
+<!--					</y:parameter>-->
+<!--				</y:action>-->
+<!--			</y:group>-->
+			<y:group qualifier="save3" show-group-header="true" show-separator="true">
+				<y:label>actiongroup.save3</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.save" property="selectedObjects">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.save</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+
+			<y:group qualifier="smile1" show-group-header="true" show-separator="true">
+				<!-- action **SUCCESS -->
+				<y:label>actiongroup.smile</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.smiley" property="pageable.typeCode">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.smiley</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+			<!-- !!!!! can't work, because perform() accepts string but currentObject is an object (CustomerModel) !!!!! -->
+<!--			<y:group qualifier="smile2" show-group-header="true" show-separator="true">-->
+<!--				&lt;!&ndash; action **SUCCESS &ndash;&gt;-->
+<!--				<y:label>actiongroup.smile2</y:label>-->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.smiley" property="currentObject">-->
+<!--					<y:parameter>-->
+<!--						<y:name>actionName</y:name>-->
+<!--						<y:value>testing.action.confirmation.title.smiley</y:value>	&lt;!&ndash; popup with title appears &ndash;&gt;-->
+<!--					</y:parameter>-->
+<!--				</y:action>-->
+<!--			</y:group>-->
+			<y:group qualifier="smile3" show-group-header="true" show-separator="true">
+				<!-- action **SUCCESS -->
+				<y:label>actiongroup.smile3</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.smiley" property="selectedObjects">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.smiley</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- 6. ORDER actions - EDITOR AREA -->
+	<context type="AbstractOrder" component="editorareaactions" merge-by="type" parent="auto">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common" show-group-header="true" show-separator="true">
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.popup" property="currentObject"/>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- 6. ORDER actions - LISTVIEW AREA ~~ test - if above example works in listviewactions ?? -->
+	<context type="AbstractOrder" component="listviewactions" merge-by="type" parent="auto">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common" show-group-header="true" show-separator="true">
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.popup" property="currentObject"/>
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- PAGEABLE -->
+	<!-- 7. PRODUCTS action - EXPORT PRODUCTS TEST -->
+	<context component="listviewactions" type="Product">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="exportProducts" show-group-header="true" show-separator="true">
+				<y:label>actiongroup.exportProducts</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.export" property="typeCode">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>label.export.all2</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+
+	<!-- ~~~~~~~~~~~~~~~~~~ T E S T ~~ T E S T ~~ T E S T ~~ T E S T ~~ T E S T ~~ A C T I O N S ~~~~~~~~~~~~~~~~~~~ -->
+	<!--																											 -->
+	<!-- Product test actions -->
+	<context type="Product" component="editorareaactions" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="test" show-separator="true" show-group-header="true">
+				<y:label>actiongroup.test</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.testAction" property="pageable.typeCode">
+					<!-- !! changed from property="currentObject" to pageable.typeCode !! -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.test</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- Employee test actions -->
+	<context type="Employee" component="listviewactions" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="test" show-group-header="true" show-separator="true">
+				<y:label>actiongroup.test</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.testAction" property="pageable.typeCode">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.confirmation.title.test</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- Resend registration Invite Email -->
+	<context merge-by="module" component="editorareaactions" type="Customer">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common" show-group-header="false" show-separator="false">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.resendregistrationemail" property="currentObject">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.resend.registration.email.title</y:value>	<!-- popup title Confirm sending an e-mail? -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+
+		</y:actions>
+	</context>
+
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~ C U S T O M ~~ W I Z A R D S ~~ ON ~~ C U S T O M ~~ A C T I O N S ~~~~~~~~~~~~~~~~~~~~ -->
+	<!--																											 -->
+	<!-- Product actions wizards -->
+	<context type="GenericItem" component="xml-product-import-wizard">
+		<wizard:flow id="fileImportWizard" title="file.import.wizard.title" show-breadcrumb="false">
+			<wizard:prepare id="fileImportWizardForm">
+				<!-- **creates fileForm object from fileImportWizardForm bean -->
+				<wizard:initialize property="fileForm" template-bean="fileImportWizardForm" />
+				<wizard:initialize property="newProduct" type="ctx.TYPE_CODE"/>
+				<wizard:assign property="newProduct.catalogVersion" value="ctx.catalogVersion"/>
+				<wizard:assign property="newProduct.catalogVersion" value="ctx?.actionContext?.catalogVersion"/>
+			</wizard:prepare>
+			<wizard:step id="step1" label="">
+				<wizard:content>
+					<wizard:property-list>
+						<wizard:property qualifier="fileForm.importFile"
+										 type="com.hybris.cockpitng.editor.defaultfileupload.FileUploadResult"
+										 editor="com.hybris.cockpitng.editor.dndfileupload" validate="false">	<!-- multidndfileupload ~~ select multiple files -->
+							<!-- https://answers.sap.com/questions/12767325/overwriting-defaultbooleaneditor.html -->
+							<!-- \bin\modules\backoffice-framework\backoffice\web\webroot\WEB-INF\lib\cockpit-standard-editors-20.11.18-RC1.jar!\cockpitng\widgets\editors -->
+							<!-- \bin\modules\backoffice-framework\backoffice\web\webroot\WEB-INF\lib\cockpit-standard-editors-20.11.18-RC1.jar!\META-INF\standard-editors-spring.xml -->
+							<wizard:editor-parameter>
+								<wizard:name>accept</wizard:name>
+								<wizard:value>application/xml</wizard:value>
+							</wizard:editor-parameter>
+							<wizard:editor-parameter>
+								<wizard:name>singleLineMode</wizard:name>
+								<wizard:value>true</wizard:value>
+							</wizard:editor-parameter>
+						</wizard:property>
+						<wizard:property qualifier="newProduct.catalogVersion"
+										 type="CatalogVersionModel" />
+					</wizard:property-list>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel />
+					<!-- **calls fileImportHandler -->
+					<wizard:custom label="File.import.wizard.button.label"
+								   handler="fileImportHandler"
+								   visible="fileForm.importFile!=null and newProduct.catalogVersion != null" />	<!-- final button to confirm -->
+				</wizard:navigation>
+			</wizard:step>
+			<wizard:step id="step2" label="">
+				<wizard:content id="step2.content">
+					<wizard:custom-view lang="zul">
+						<!-- **calls fileImportValidationResultRenderer -->
+						<wizard:renderer spring-bean="fileImportValidationResultRenderer" />
+					</wizard:custom-view>
+				</wizard:content>
+				<wizard:navigation id="step2.navigation">
+					<wizard:back />
+					<wizard:cancel />
+					<!-- **calls fileImportHandler -->
+					<wizard:custom label="excel.import.ignore.wizard.button.label"
+								   handler="fileImportHandler" visible="!excelHasValidationErrors" />
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
+	</context>
+	<context component="notification-area" source="fileImport" merge-by="source">
+		<na:notification-area>
+			<na:notifications eventType="fileMissingFile" level="FAILURE">
+				<na:message>file.notify.missing.file.failure</na:message>
+			</na:notifications>
+			<na:notifications eventType="fileMissingFormInModel" level="FAILURE">
+				<na:message>file.notify.missing.form.failure</na:message>
+			</na:notifications>
+			<na:notifications eventType="FileImportSuccess" level="SUCCESS">
+				<na:message>file.notify.form.success</na:message>
+			</na:notifications>
+		</na:notification-area>
+	</context>
+
+	<!-- MULTIPLE PRODUCTS SELECT -->
+	<context type="GenericItem" component="multiple-products-select-wizard">
+		<wizard:flow id="multipleSelectWizard" title="multiselect.open.wizard.title" show-breadcrumb="false">
+			<wizard:prepare id="multipleSelectWizardForm">
+				<!-- **creates fileForm object from fileImportWizardForm bean -->
+				<wizard:initialize property="products" template-bean="multipleSelectWizardForm" />
+				<wizard:initialize property="newProduct" type="ctx.TYPE_CODE"/>
+				<wizard:assign property="newProduct.code" value="ctx.code"/>
+				<wizard:assign property="newProduct.code" value="ctx?.actionContext?.code"/>
+				<wizard:assign property="newProduct.catalogVersion" value="ctx.catalogVersion"/>
+				<wizard:assign property="newProduct.catalogVersion" value="ctx?.actionContext?.catalogVersion"/>
+			</wizard:prepare>
+			<wizard:step id="step1" label="">
+				<wizard:info id="step1.intro" position="top" label="multiselect.open.wizard.title" />
+				<wizard:content>
+					<wizard:property-list>
+						<wizard:property qualifier="newProduct.code"
+										 type="java.lang.String" />
+						<wizard:property qualifier="products.productsModelList"
+										 type="MultiReference-LIST(Product)"
+										 editor="com.hybris.cockpitng.editor.extendedmultireferenceeditor"
+										 validate="false" />	<!-- type ? -->
+						<wizard:property qualifier="newProduct.catalogVersion"
+										 type="CatalogVersionModel" />
+						<wizard:property qualifier="description"
+										 type="java.lang.String"
+										 editor="com.hybris.cockpitng.editor.wysiwyg" />
+					</wizard:property-list>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel />
+					<!-- **calls multiselectHandler -->
+					<wizard:custom label="multiselect.open.wizard.button.label"
+								   handler="multiselectHandler"
+								   visible="newProduct.catalogVersion != null" />
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
+	</context>
+
+	<!-- EXPORT PRODUCTS TEST WIZARD -->
+	<!-- wizard message: missing excel export configuration !!! -->
+	<context type="GenericItem" component="export-wizard-test">
+		<wizard:flow id="exportWizard" title="excel.export.wizard.title" show-breadcrumb="false" size="large">
+			<wizard:prepare id="exportWizardPrepare">
+				<wizard:initialize property="exportForm" template-bean="exportWizardForm"/>
+				<wizard:initialize property="exportForm.attributesForm" template-bean="attributesForm"/>
+				<wizard:assign property="exportForm.pageable" value="ctx.exportData"/>
+				<wizard:assign property="exportForm.typeCode" value="ctx.TYPE_CODE"/>
+			</wizard:prepare>
+			<wizard:step id="step1" label="excel.export.wizard.attributes.label" sublabel="excel.export.wizard.attributes.sublabel">	<!-- Products' Attributes -->
+				<wizard:content id="step1.content">
+					<wizard:custom-view lang="zul">
+						<wizard:renderer spring-bean="excelExportRenderer"/>
+					</wizard:custom-view>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel/>
+					<wizard:custom label="excel.export.wizard.button.label" handler="exportHandler" />
+					<!-- visible="exportForm.attributesForm.hasSelectedAttributes()"/> -->
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
+	</context>
+
+
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~  H Y B R I S ~~  O U T ~~ O F ~ T H E ~~ B O X ~~ A C T I O N S  ~~~~~~~~~~~~~~~~~~~~ -->
+	<context component="listviewactions" type="Customer" merge-by="module">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<!-- 1. action **SUCCESS -->
+				<y:action action-id="com.hybris.backoffice.widgets.actions.startWorkflow" property="$_selectedWorkflow" triggerOnKeys="#del">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>workflow.action.confirmation.title.start</y:value>
+					</y:parameter>
+				</y:action>
+
+				<!-- 2. action **SUCCESS -->
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="com.hybris.backoffice.widgets.actions.terminateWorkflow" property="$_selectedWorkflow">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>workflow.action.confirmation.title.terminate</y:value>
+					</y:parameter>
+				</y:action>
+
+				<!-- 3. action **SUCCESS -->
+				<y:action action-id="com.hybris.backoffice.widgets.actions.deleteWorkflow" property="$_selectedWorkflow">
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>workflow.action.confirmation.title.delete</y:value>
+					</y:parameter>
+				</y:action>
+				<!-- OUT ~ OF ~ THE ~ BOX ~ ACTIONS -->
+			</y:group>
+		</y:actions>
+	</context>
+
+
+	<!-- page export action + wizard -->
+	<context merge-by="module" component="listviewactions" type="PriceRow">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="pageExport" show-group-header="false" show-separator="true">
+				<y:label>actiongroup.pageExport</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.pageExport" property="pageable">			<!-- check it -->
+<!--				<y:action action-id="de.hybris.platform.testingbackoffice.actions.pageExport" property="typeCode">-->	<!-- default -->
+					<y:parameter>
+						<y:name>actionName</y:name>
+						<y:value>testing.action.label.export.name</y:value>	<!-- popup with title appears -->
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+	<!-- EXPORT PRODUCTS TEST WIZARD -->
+	<!-- wizard message: missing excel export configuration !!! -->
+	<context type="GenericItem" component="pageExport-wizard-test">
+		<wizard:flow id="exportWizard" title="excel.export.wizard.title" show-breadcrumb="false" size="large">
+			<wizard:prepare id="exportWizardPrepare">
+				<wizard:initialize property="exportForm" template-bean="exportWizardForm"/>
+				<wizard:initialize property="exportForm.attributesForm" template-bean="attributesForm"/>
+				<wizard:assign property="exportForm.pageable" value="ctx.exportData"/>
+				<wizard:assign property="exportForm.typeCode" value="ctx.TYPE_CODE"/>
+			</wizard:prepare>
+			<wizard:step id="step1" label="excel.export.wizard.attributes.label" sublabel="excel.export.wizard.attributes.sublabel">	<!-- Products' Attributes -->
+				<wizard:content id="step1.content">
+					<wizard:custom-view lang="zul">
+						<wizard:renderer spring-bean="excelExportRenderer"/>
+					</wizard:custom-view>
+				</wizard:content>
+				<wizard:navigation id="step1.navigation">
+					<wizard:cancel/>
+					<wizard:custom label="excel.export.wizard.button.label" handler="exportHandler" />
+					<!-- visible="exportForm.attributesForm.hasSelectedAttributes()"/> -->
+				</wizard:navigation>
+			</wizard:step>
+		</wizard:flow>
+	</context>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ W I D G E T S ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!---->
+
+	<context type="Door" component="dooractions">
+		<y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:group qualifier="common">
+				<y:label>actiongroup.common</y:label>
+				<y:action action-id="de.hybris.platform.testingbackoffice.actions.lock" property="door">
+					<y:parameter>
+						<y:name>lockSocket</y:name>
+						<y:value>door</y:value>
+					</y:parameter>
+				</y:action>
+			</y:group>
+		</y:actions>
+	</context>
+
+
+
+	<!-- RESOURCES -->
+	<!-- https://www.betamaster.us/blog/?p=1853 -->
+	<!-- https://stackoverflow.com/questions/71764569/how-to-add-a-popup-with-an-exiting-functionality-of-hybris-backoffice -->
+	<!-- https://medium.com/@neznajuskas/hybris-backoffice-popup-item-editor-30c2cfd5dbfd -->
+
+</config>

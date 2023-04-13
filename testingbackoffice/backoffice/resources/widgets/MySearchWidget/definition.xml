@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<widget-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   id="de.hybris.platform.testingbackoffice.widgets.mySearch"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widget-definition.xsd">
+
+    <name>My Search</name>
+    <description>My own search widget.</description>
+    <defaultTitle>Search</defaultTitle>
+    <author>Gorazd Murko</author>
+    <version>0.1</version>
+
+    <view src="mySearch.zul"/>
+
+    <controller class="de.hybris.platform.testingbackoffice.widgets.mySearch.MySearchController"/>
+
+</widget-definition>

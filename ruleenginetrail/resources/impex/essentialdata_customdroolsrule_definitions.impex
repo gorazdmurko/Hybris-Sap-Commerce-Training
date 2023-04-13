@@ -1,0 +1,19 @@
+
+# essentialdata-definitions.impex contains a number of out-of-the-box conditions and actions. You can map these to a new source rule type
+
+# map a few OOTB condition and action definitions to the new source rule type that we created in the previous step ( CustomSourceRule)
+
+############################# CONDITION DEFINITION RULE TYPE MAPPINGS ##########################
+INSERT_UPDATE RuleConditionDefinitionRuleTypeMapping;definition(id)[unique=true];ruleType(code)[default=CustomSourceRule][unique=true]
+                                                    ;y_cart_total;
+                                                    ;y_qualifying_products;
+
+############################# ACTION DEFINITION RULE TYPE MAPPINGS ##########################
+INSERT_UPDATE RuleActionDefinitionRuleTypeMapping;definition(id)[unique=true];ruleType(code)[default=CustomSourceRule][unique=true]
+                                                 ;y_order_fixed_discount;
+                                                 ;y_trigger_message;
+
+
+# Create a mapping between the new SourceRule type and the new RuleType that we have created
+INSERT_UPDATE RuleToEngineRuleTypeMapping;ruleType(code)[unique=true];engineRuleType(code)[default=CUSTOMDROOLSRULE]
+                                         ;CustomSourceRule;

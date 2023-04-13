@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<!-- dynamic enum means, values can be changed at run time using impex or hmc(backoffice) -->
+		<!-- static enum means, values can only be changed during compilation time by changing the items.xml -->
+		<enumtype code="AbcEnum" generate="true" autocreate="true" dynamic="false">
+			<value code="testAbc1" />
+			<value code="testAbc2" />
+		</enumtype>
+
+		<!-- ~~ ERVIN ~~ -->
+		<enumtype code="SocialSiteEnumType" generate="true" autocreate="true" dynamic="true">
+			<value code="TIKTOK" />
+			<value code="TWITTER" />
+			<value code="LINKEDIN" />
+			<value code="WHATSAPP" />
+			<value code="FACEBOOK" />
+			<value code="INSTAGRAM" />
+			<value code="PINTEREST" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<!-- relation between Customer & ExternalToken - 1 customer can have many external tokens -->
+		<relation code="Customer2ExternalToken" localized="false" autocreate="true">
+			<sourceElement type="Customer" qualifier="customer" cardinality="one">
+				<modifiers read="true" write="true" search="true" optional="false" />
+			</sourceElement>
+			<targetElement type="ExternalToken" qualifier="externalToken" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true" partof="true" />
+			</targetElement>
+		</relation>
+
+		<!-- ~~ ERVIN ~~ -->
+		<!-- relation between Customer & SocialSite - 1 customer can have many social sites -->
+		<relation code="Customer2SocialSite" localized="false" autocreate="true">
+			<sourceElement type="Customer" qualifier="customer" cardinality="one">
+				<modifiers read="true" write="true" search="true" optional="false" />
+			</sourceElement>
+			<targetElement type="SocialSite" qualifier="socialSite" cardinality="many">
+				<modifiers read="true" write="true" search="true" optional="true" partof="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<!-- ExternalToken -->
+		<itemtype code="ExternalToken"
+				  generate="true" autocreate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.ExternalToken">
+			<deployment table="ExternalToken" typecode="10101" />
+			<attributes>
+				<attribute qualifier="abc" type="AbcEnum">
+					<description>Enum property</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="value" type="java.lang.String">
+					<description>String property</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- ~~ ERVIN ~~ -->
+		<!-- SocialSite -->
+		<itemtype code="SocialSite"
+				  generate="true" autocreate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.SocialSite">
+			<deployment table="SocialSite" typecode="10102" />
+			<attributes>
+				<attribute qualifier="name" type="SocialSiteEnumType">
+					<description>Enum property</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="url" type="java.lang.String">
+					<description>String property</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EMAIL 5 - CUSTOM TRAINING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- creates TrainingEmailProcess jalo class & TrainingEmailProcessModel model class -->
+		<itemtype code="TrainingEmailProcess" autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.custom.TrainingEmailProcess"
+				  extends="StoreFrontCustomerProcess">
+			<attributes>
+				<attribute qualifier="cart" type="AbstractOrder">
+					<description>Eligibility for Premium Membership</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<!-- creates HybrisTubeEmailProcess jalo class & HybrisTubeEmailProcessModel model class -->
+		<itemtype code="HybrisTubeEmailProcess" autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.custom.HybrisTubeEmailProcess"
+				  extends="StoreFrontCustomerProcess">
+			<attributes>
+				<attribute qualifier="cart" type="AbstractOrder">
+					<description>Eligibility for Gold Customer cart (A customer cart becomes Gold Cart when cart total is greater than 100)</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- creates ConsentEmailProcess jalo class & ConsentEmailProcessModel model class -->
+		<itemtype code="ConsentEmailProcess" autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.custom.ConsentEmailProcess"
+				  extends="StoreFrontCustomerProcess">
+			<attributes>
+				<attribute qualifier="token" type="java.lang.String">
+					<persistence type="property"/>
+					<description>The confirmation token.</description>
+				</attribute>
+				<attribute qualifier="consentConfirmationURL" type="java.lang.String">
+					<description>Holds URL address for consent confirmation</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 6 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- SimpleCMSComponent -->
+		<itemtype code="TrainingVideoComponent"
+				  extends="SimpleCMSComponent"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.TrainingVideoComponent"
+				  abstract="false">
+			<attributes>
+				<attribute qualifier="width" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="height" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="videoId" type="java.lang.String">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="autoPlay" type="java.lang.Boolean">
+					<modifiers optional="false" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="showControls" type="java.lang.Boolean">
+					<modifiers optional="false" />
+					<defaultvalue>false</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CustomParagraphComponent"
+				  extends="CMSParagraphComponent"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomParagraphComponent"
+				  abstract="false">	<!-- because parent is already abstract -->
+			<attributes>
+<!--				<attribute qualifier="headerSection" generate="true" autocreate="true" type="localized:java.lang.String">-->
+				<attribute qualifier="headerSection" type="localized:java.lang.String">
+					<persistence type="property" />
+					<defaultvalue>Custom Paragraph Header</defaultvalue>
+					<modifiers optional="true" />
+				</attribute>
+<!--				<attribute qualifier="footerSection" generate="true" autocreate="true" type="localized:java.lang.String">-->
+				<attribute qualifier="footerSection" type="localized:java.lang.String">
+					<persistence type="property" />
+					<defaultvalue>Custom Paragraph Footer</defaultvalue>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="TrainingOldCartRemovalJob" extends="CronJob">
+			<attributes>
+				<attribute qualifier="hours" type="java.lang.Integer">
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<itemtype code="NewCustomTrainingAction"
+				  extends="SimpleCMSAction"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.acceleratorcms.jalo.actions.MyNewAction">
+		</itemtype>
+
+
+		<itemtype code="CustomConsentManagementComponent"
+				  extends="SimpleCMSComponent"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomConsentManagementComponent"
+		>
+			<description>Represents Consent Management Actions</description>
+		</itemtype>
+
+		<itemtype code="AnonymousConsentManagementComponent"
+				  extends="SimpleCMSComponent"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.components.CustomConsentManagementComponent"
+		>
+			<description>Represents Consent Management Actions</description>
+		</itemtype>
+
+
+
+		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TASK 4 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- Custom Code for training Purposes -->
+		<!-- new custom type TrainingProduct which is subclass of Product -->
+		<typegroup name="TrainingProduct">
+			<itemtype code="TrainingProduct" extends="Product" autocreate="true" generate="true">
+				<attributes>
+					<attribute qualifier="trainingName" type="java.lang.String" autocreate="true">
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="trainingDescription" type="java.lang.String" autocreate="true">
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="trainingDate" type="java.util.Date" autocreate="true">
+						<modifiers read="true" write="true" search="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+
+
+
+
+		
+
+		<!-- video 36 -->
+		<!--		<itemtype code="HybrisTubeShop" autocreate="true">-->
+		<!--			<deployment table="HybrisTubeOwnShop" typecode="10218" />-->
+		<!--			<attributes>-->
+		<!--				<attribute qualifier="storeId" type="java.lang.String">-->
+		<!--					<description>Store Id of Special Hybris Tube Store</description>-->
+		<!--					<modifiers />-->
+		<!--					<persistence type="property" />-->
+		<!--				</attribute>-->
+		<!--				<attribute qualifier="storeName" type="java.lang.String">-->
+		<!--					<description>Store Name of Special Hybris Tube Store</description>-->
+		<!--					<modifiers />-->
+		<!--					<persistence type="property" />-->
+		<!--				</attribute>-->
+		<!--				<attribute qualifier="storeCity" type="java.lang.String">-->
+		<!--					<description>Store City of Special Hybris Tube Store</description>-->
+		<!--					<modifiers />-->
+		<!--					<persistence type="property" />-->
+		<!--				</attribute>-->
+		<!--				<attribute qualifier="storeOwnerName" type="java.lang.String">-->
+		<!--					<description>Store Owner of Special Hybris Tube Store</description>-->
+		<!--					<modifiers />-->
+		<!--					<persistence type="property" />-->
+		<!--				</attribute>-->
+		<!--			</attributes>-->
+		<!--		</itemtype>-->
+
+
+		<!-- MyCustomer -->
+		<!--
+		<itemtype code="MyCustomer" extends="Customer"
+				  generate="true" autocreate="true"
+				  jaloclass="de.hybris.platform.testingcore.jalo.MyCustomer">
+			<attributes>
+				<attribute qualifier="externalToken" type="ExternalToken">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		-->
+	</itemtypes>
+</items>

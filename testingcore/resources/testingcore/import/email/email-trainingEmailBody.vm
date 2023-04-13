@@ -1,0 +1,159 @@
+## messageSource=classpath:/yacceleratorcore/messages/email-orderCancelled_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+        <title>Training Email Body</title>
+        <style>
+            .flexbox-item {
+                border: 2px solid blue;
+                background: greenyellow;
+            }
+        </style>
+    </head>
+    <body bgcolor="#ffffff">
+        <table width="100%" border="0" bgcolor="#f2f5f6" style="border: 2px solid brown;">
+            <thead>
+                <tr style="padding-left: 20px;">
+                    #set ($linkTextColor="brown")
+                    #set ($linkBackgroundColor="lightgray")
+                    #set ($electronics="${ctx.secureBaseUrl}")
+                    #set ($update-profile="${ctx.secureBaseUrl}/my-account/update-profile")
+                    #set ($bigBangLink="https://www.bigbang.si/izdelki/foto-kamere/fotoaparati/zrcalni-in-sistemski/")
+
+                    <td height="30" align="right" valign="middle" bgcolor=$linkBackgroundColor>
+                        <font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">
+                            <a href=$electronics>
+                                <font color=$linkTextColor>Electronics</font>
+                            </a> |
+                            <a href=$update-profile>
+                                <font color=$linkTextColor>My Account</font>
+                            </a> |
+                            <a href=$bigBangLink>
+                                <font color=$linkTextColor>Big Bang</font>
+                            </a> &nbsp;&nbsp;
+                        </font>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="612" height="500" align="center" border="0">
+                            <tr>
+                                <td align="center">
+                                    ##                    <img width="20%" height="20%" src="data:image/png;base64,${ctx.encodedUrl}" alt="no image">
+                                    ##            <h3>Image: ${ctx.mediaSecureBaseUrl}/testingstorefront${ctx.imageUrl}</h3>
+                                    <div align="center" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <img align="center" width="20%" height="20%"
+                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUIi_wwRrOhAk7FoY7EVi2Hg5bAR-6MQGVPg&usqp=CAU"
+                                             alt="no image">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <table align="center" valign="center" width="300" height="400" style="padding-left: 20px; padding-right: 20px;">
+                                <tr>
+                                    <td>
+                                        <h3>Congratulations, ${ctx.title} ${ctx.displayName}!</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        You are eligible for premium Membership.
+                                        Since your cart value is above 300, complete your order and get the premium benefits.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br />
+                                        <div>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim aspernatur illum cum, laudantium earum
+                                            numquam qui, dolorum, at fugiat sint ipsam error repudiandae culpa ipsa. Nesciunt eum enim quas assumenda?
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim aspernatur illum cum, laudantium earum
+                                            numquam qui, dolorum, at fugiat sint ipsam error repudiandae culpa ipsa. Nesciunt eum enim quas assumenda?
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="30">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>List of your External Tokens:</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <ul>
+                                            #if (${ctx.customer.getExternalToken().size()} > 0)
+                                                #foreach( $token in ${ctx.customer.getExternalToken()} )
+                                                    <li>
+                                                        <span>$token.getValue()</span> ( <span>$token.getAbc()</span> )
+                                                    </li>
+                                                #end
+                                            #else
+                                                 <font color="red">
+                                                     <span>No available tokens!</span>
+                                                 </font>
+                                            #end
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Regards</td>
+                                </tr>
+                                <tr>
+                                    <br />
+                                    <td>${ctx.fromDisplayName}</td>
+                                </tr>
+                            </table>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="padding-left: 20px">
+                        <h5>${ctx.dateTool}</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px">
+                        <h6>
+                            <b>EMAIL FROM: </b>
+                            <font color="blue">${ctx.fromEmail}</font>,
+                            <b>TO: </b>
+                            <font color="blue">${ctx.fromEmail}${ctx.customer.getContactEmail()}</font>
+                        </h6>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+</html>

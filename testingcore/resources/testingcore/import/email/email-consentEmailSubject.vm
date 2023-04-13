@@ -1,0 +1,2 @@
+${ctx.displayName}, please confirm your consent!
+## ${ctx.messages.getMessage('emailSubject', ${ctx.order.code})}

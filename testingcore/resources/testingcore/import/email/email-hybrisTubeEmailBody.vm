@@ -1,0 +1,259 @@
+## messageSource=classpath:/yacceleratorcore/messages/email-orderCancelled_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Training Email Body</title>
+        <style>
+            body, table, td, a {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+
+            table, td {
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+            }
+
+            img {
+                border: 0;
+                height: auto;
+                line-height: 100%;
+                outline: none;
+                text-decoration: none;
+                -ms-interpolation-mode: bicubic;
+            }
+
+            table {
+                border-collapse: collapse !important;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            div[style*="margin: 16px 0;"] {
+                margin: 0 !important;
+            }
+
+            a[x-apple-data-detectors] {
+                color: inherit !important;
+                text-decoration: none !important;
+                font-size: inherit !important;
+                font-family: inherit !important;
+                font-weight: inherit !important;
+                line-height: inherit !important;
+            }
+
+            .flexbox-container {
+                display: flex;
+            }
+            .flexbox-item {
+                width: 20vw;
+                margin: 2vw;
+                border: 2px solid blue;
+                background: skyblue;
+            }
+        </style>
+    </head>
+    <body bgcolor="#ffffff">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noindex, nofollow">
+        <title>${ctx.fromDisplayName}</title>
+
+        <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F5F6">
+            <tbody>
+            <tr>
+                <td width="100%" valign="top" align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                        <tbody>
+                        <tr>
+                            <td align="center" height="100%" valign="top" width="100%">
+                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:640px"
+                                       bgcolor="#F2F5F6">
+                                    <thead>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        #set ($linkTextColor="brown")
+                                        #set ($linkBackgroundColor="lightgray")
+                                        #set ($electronics="${ctx.secureBaseUrl}")
+                                        #set ($update-profile="${ctx.secureBaseUrl}/my-account/update-profile")
+                                        #set ($bigBangLink="https://www.bigbang.si/izdelki/foto-kamere/fotoaparati/zrcalni-in-sistemski/")
+
+                                        <td height="30" align="right" valign="middle" bgcolor=$linkBackgroundColor>
+                                            <font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">
+                                                <a href=$electronics>
+                                                    <font color=$linkTextColor>Electronics</font>
+                                                </a> |
+                                                <a href=$update-profile>
+                                                    <font color=$linkTextColor>My Account</font>
+                                                </a> |
+                                                <a href=$bigBangLink>
+                                                    <font color=$linkTextColor>Big Bang</font>
+                                                </a> &nbsp;&nbsp;
+                                            </font>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <img src="https://dk.asko.com/medias/ASKO-warranty-quality-service.png?context=
+                                                            bWFzdGVyfHJvb3R8MjcyNTY3fGltYWdlL3BuZ3xoMTEvaGU3LzkwMDI5MzIwMTEwMzgvQVN
+                                                            LTy13YXJyYW50eS1xdWFsaXR5LXNlcnZpY2UucG5nfDM3ZjgxZGIwZTRkZmEzZjMyNzc3ZD
+                                                            NkMGM0NTZhM2NlMTJiZDZlM2RiNjQ3MGU3NzQzZjhjZDk4MDUyNDRhYzU"
+                                                     alt="No image" />
+                                                ##<img src="${ctx.secureBaseUrl}${imageUrl}" alt="No image" />
+                                            </div>
+                                            <div>
+                                                ${ctx.secureBaseUrl}${ctx.imageUrl}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#fff" width="640" height="400" valign="top">
+                                            <div>
+                                                <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+                                                    <thead>
+                                                    <tr>
+                                                        <td height="40">&nbsp;</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td align="left" style="padding-left: 20px; padding-right: 20px;">
+                                                            <b>Hello Hybris Teammate!</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="30" style="font-size: 40px; line-height: 40px;">
+                                                            &nbsp;
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left: 20px; padding-right: 20px;">
+                                                            <div>
+                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sit maiores error
+                                                                nostrum a libero excepturi nulla ipsum atque? Unde assumenda culpa commodi nesciunt
+                                                                excepturi deserunt a eaque minus enim?
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="40">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <table align="center">
+                                                            <tr align="center">
+                                                                <td style="padding-left: 30px; border: 2px solid dimgrey; width: 40%;">
+                                                                    <img align="center" width="60%" height="60%"
+                                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUIi_wwR
+                                                                                rOhAk7FoY7EVi2Hg5bAR-6MQGVPg&usqp=CAU" alt="no image">
+                                                                </td>
+                                                                <td style="padding-left: 30px; border: 2px solid dimgrey;
+                                                                            width: 40%; list-style: none; margin-top: 10px;">
+                                                                    <ul align="left" style="list-style-type: none; margin-top: 10px;">
+                                                                        <li><h3>${ctx.product.getName()}</h3></li>
+                                                                        <li>Code: ${ctx.product.getCode()}</li>
+                                                                        <li>EAN: ${ctx.product.getEan()}</li>
+                                                                        <li>Catalog: ${ctx.product.getCatalogVersion().getCatalog().getName()}</li>
+                                                                        ##<li>Description: ${ctx.product.getDescription()}</li>
+                                                                    </ul>
+                                                                    <br />
+                                                                    <div>
+                                                                        <h3>PRICE: ${ctx.price} $</h3>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td height="30">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left: 20px; padding-right: 20px;">
+                                                            <div>
+                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sit maiores error
+                                                                nostrum a libero excepturi nulla ipsum atque? Unde assumenda culpa commodi nesciunt
+                                                                excepturi deserunt a eaque minus enim?
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td height="40">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left: 20px; padding-right: 20px;">Thanx and Regards,</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="20">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left: 20px; padding-right: 20px;">Electronics Sales Team</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td height="40">&nbsp;</td>
+                                                </tr>
+                                                <tr style="padding-left: 20px;">
+                                                    <td>${ctx.dateTool}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td height="5" style="font-size: 10px; line-height: 17px;">&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

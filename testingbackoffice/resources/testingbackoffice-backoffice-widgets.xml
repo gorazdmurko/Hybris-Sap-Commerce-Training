@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
+
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="testingbackoffice-perspective" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.testingbackofficewidget"
+            template="false" slotId="perspectives" title="Hello testingbackoffice">
+            <setting key="perspectiveImageUrl" value="/cng/images/perspective.png"
+                type="String" />
+        </widget>
+    </widget-extension>
+
+    <!-- MY CODE ~~ file upload -->
+    <widget-extension widgetId="mainSlot">
+        <widget id="fileImportFlowContextCreator"
+                widgetDefinitionId="com.hybris.cockpitng.widgets.common.propextractor"
+                slotId="cockpitWidgetChildrenInvisible" template="false">
+            <setting key="expression" type="String">
+                {
+                    TYPE_CODE: #root,
+                    configurableFlowConfigCtx: 'xml-product-import-wizard'
+                }
+            </setting>
+            <setting key="socketDataType_$T" type="String">java.util.Map</setting>
+            <virtual-sockets/>
+        </widget>
+    </widget-extension>
+    <!-- It should listen node selection events in list-view-action widget -->
+    <widget-connection sourceWidgetId="STUB_de.hybris.platform.testingbackoffice.actions.xmlProductImport" outputId="typeCode"
+                       targetWidgetId="fileImportFlowContextCreator" inputId="genericInput" />
+    <!-- When required navigation node is selected, the widget should send its id to the right panel be displayed in it -->
+    <widget-connection sourceWidgetId="fileImportFlowContextCreator" outputId="genericOutput"
+                       targetWidgetId="configurableFlow" inputId="context"/>   <!-- id="configurableFlow" ~~ backoffice-widgets.xml 154 -->
+
+
+
+    <!-- MY CODE ~~ multiselect -->
+    <widget-extension widgetId="mainSlot">
+        <widget id="multiselectFlowContextCreator"
+                widgetDefinitionId="com.hybris.cockpitng.widgets.common.propextractor"
+                slotId="cockpitWidgetChildrenInvisible" template="false">
+            <setting key="expression" type="String">
+                {
+                    TYPE_CODE: #root,
+                    configurableFlowConfigCtx: 'multiple-products-select-wizard'
+                }
+            </setting>
+            <setting key="socketDataType_$T" type="String">java.util.Map</setting>
+            <virtual-sockets/>
+        </widget>
+    </widget-extension>
+    <widget-connection sourceWidgetId="STUB_de.hybris.platform.testingbackoffice.actions.multipleProductsSelectAction" outputId="typeCode"
+                       targetWidgetId="multiselectFlowContextCreator" inputId="genericInput" />
+    <widget-connection sourceWidgetId="multiselectFlowContextCreator" outputId="genericOutput"
+                       targetWidgetId="configurableFlow" inputId="context"/>
+
+
+    <!-- MY CODE ~~ EXPORT test -->
+    <widget-extension widgetId="mainSlot">
+        <widget id="exportFlowContextCreator"
+                widgetDefinitionId="com.hybris.cockpitng.widgets.common.propextractor"
+                slotId="cockpitWidgetChildrenInvisible" template="false">
+            <setting key="expression" type="String">
+                {
+                    TYPE_CODE:#root.typeCode,
+                    configurableFlowConfigCtx:'export-wizard-test',
+                    exportData:#root
+                }
+            </setting>
+            <setting key="socketDataType_$T" type="String">java.util.Map</setting>
+            <virtual-sockets/>
+        </widget>
+    </widget-extension>
+    <widget-connection sourceWidgetId="STUB_de.hybris.platform.testingbackoffice.actions.export" outputId="itemsToExport"
+                       targetWidgetId="exportFlowContextCreator" inputId="genericInput" />
+    <widget-connection sourceWidgetId="exportFlowContextCreator" outputId="genericOutput"
+                       targetWidgetId="configurableFlow" inputId="context" />
+
+
+
+    <!--            W I D G E T S        -->
+
+    <!-- custom mySearch widget -->
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="MySearch - Custom" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"
+                template="false" title="MySearch - Custom">
+            <widget id="mySearch" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.mySearch" slotId="leftSlot"/>
+        </widget>
+    </widget-extension>
+
+    <!-- custom myInput widget -->
+    <widget-extension widgetId="backofficeMainSlot">
+        <widget id="MyInput - Custom" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"
+                template="false" title="MyInput - Custom">
+            <widget id="myInput" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.myInput" slotId="rightSlot"/>
+        </widget>
+    </widget-extension>
+
+    <!-- custom myChat widget -->
+<!--    <widget-extension widgetId="backofficeMainSlot">-->
+<!--        <widget id="MyChat- Custom" widgetDefinitionId="com.hybris.cockpitng.borderlayout" slotId="perspectives"-->
+<!--                template="false" title="MyChat- Custom">-->
+<!--            <widget id="myChatLeft" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.myChat" slotId="leftSlot"/>-->
+<!--            <widget id="myChatRight" widgetDefinitionId="de.hybris.platform.testingbackoffice.widgets.myChat" slotId="rightSlot"/>-->
+<!--        </widget>-->
+<!--    </widget-extension>-->
+<!--    <widget-connection sourceWidgetId="myChatLeft" outputId="outgoingMsg" targetWidgetId="myChatRight" inputId="incomingMsg"/>-->
+<!--    <widget-connection sourceWidgetId="myChatRight" outputId="outgoingMsg" targetWidgetId="myChatLeft" inputId="incomingMsg"/>-->
+
+
+
+
+
+
+    <!-- CUSTOM training -->
+    <!-- https://medium.com/@neznajuskas/hybris-backoffice-custom-widget-in-explorer-tree-6544e8ee44d7 -->
+
+
+
+    <!-- move EXPLORER TREE from left to right side -->
+    <!--    <widget-extension widgetId="hmc2" >-->
+    <!--        <setting key="eastDisabled" type="Boolean" value="false"/>-->
+    <!--    </widget-extension>-->
+    <!--    <widget-extension widgetId="explorerTree">-->
+    <!--        <move widgetId="leftSlotContainer" targetWidgetId="hmc2" targetSlotId="rightSlot" failOnError="true" />-->
+    <!--    </widget-extension>-->
+    <!---->
+
+</widgets>

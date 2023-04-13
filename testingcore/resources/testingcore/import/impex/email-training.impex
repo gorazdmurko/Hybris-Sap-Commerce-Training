@@ -1,0 +1,77 @@
+
+## ============================= macros start =============================
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$wideContent=CMSImageComponent,BannerComponent
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+$emailPackageName=$config-emailContextPackageName
+$emailResource=$config-emailResourceValue
+
+$lang=en
+## ============================== macros end ==============================
+
+
+## ??
+# INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+# ;trainingEmailBody;$emailPackageName.TrainingEmailContext
+# ;trainingEmailSubject;$emailPackageName.TrainingEmailContext
+## ??
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+                              ;trainingEmailBody;de.hybris.platform.testingfacade.processes.email.context.TrainingEmailContext
+                              ;trainingEmailSubject;de.hybris.platform.testingfacade.processes.email.context.TrainingEmailContext
+
+
+# =========================================================================================================================
+## ??
+# UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+# ;trainingEmailBody;"Training Email Body";$emailResource/email-trainingEmailBody.vm
+# ;trainingEmailSubject;"Training Email Subject";$emailResource/email-trainingEmailSubject.vm
+,8796158636959,,,column 3: cannot resolve value 'jar:de.hybris.platform.yacceleratorcore.setup.CoreSystemSetup&/yacceleratorcore/import/emails/email-trainingEmailSubject.vm'
+## or this one??
+$lang=en
+$myEmailResourcePath8=jar:de.hybris.platform.yacceleratorcore.setup.CoreSystemSetup&/testingcore/import/email/
+$myEmailResourcepath9=jar:de.hybris.platform.testingcore.setup.TestingcoreSystemSetup.java&/testingcore/import//email/
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ;trainingEmailBody;"Training Email Body";$myEmailResourcePath8/email-trainingEmailBody.vm
+                       ;trainingEmailSubject;"Training Email Subject";$myEmailResourcePath8/email-trainingEmailSubject.vm
+# =========================================================================================================================
+
+
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+                               ;;TrainingEmailTemplate;Training Email Template;true;TrainingEmail;trainingEmailSubject;trainingEmailBody;EmailPage
+
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];fromEmail[lang=en];fromName[lang=en]
+                       ;;TrainingEmail; Training Email;TrainingEmailTemplate;true;;gorazd.murko.si@hybris.com;Zenlab Hybris Training
+
+# in my case
+# FROM: gorazd.murko.si@hybris.com
+#   TO: logged in user
+# [GenerateEmailAction] Email message generated
+# [DefaultEmailService] Sending Email [..] To [nitin2813@yahoo.com] From [nitin.hybris@gmail.com] Subject [Congratulations, you are eligible..]
+
+##
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='TrainingEmailTemplate'];validComponentTypes(code)
+                             ;SiteLogo;;;logo
+                             ;TopContent;;$wideContent;
+                             ;BottomContent;;$wideContent;
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='TrainingEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+                                    ;;SiteLogo-TrainingEmail;SiteLogo;;EmailSiteLogoSlot;true
+                                    ;;TopContent-TrainingEmail;TopContent;;EmailTopSlot;true
+                                    ;;BottomContent-TrainingEmail;BottomContent;;EmailBottomSlot;true
+
+
+
+
+# ==============================================================================================================================================
+# GORENJE EXAMPLE
+UPDATE RendererTemplate; code[unique = true]; description[lang = $lang]; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; gorenje-si-CMSLinkComponent-template                      ; "CMS Link Component Template"                       ; $emailResource/email-cmsLinkComponentTemplate.vm              ;
+                       ; gorenje-si-CMSImageComponent-template                     ; "CMS Image Component Template"                      ; $emailResource/email-cmsImageComponentTemplate.vm             ;
+                       ; gorenje-si-GGEmailHeaderComponent-template                ; GGEmailHeaderComponent Template                     ; $emailResource/gorenje/email-GGEmailHeaderComponentTemplate.vm
+# ==============================================================================================================================================

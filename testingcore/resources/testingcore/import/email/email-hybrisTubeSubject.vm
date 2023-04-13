@@ -1,0 +1,2 @@
+${ctx.displayName}, your Gold Cart is About to be Eligible for 80% Discount!
+## ${ctx.messages.getMessage('emailSubject', ${ctx.order.code})}

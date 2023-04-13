@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+
+<action-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   id="de.hybris.platform.testingbackoffice.actions.testAction"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+    <name>Test Action</name>
+    <description>Action for testing purposes</description>
+    <author>Gogi</author>
+    <version>1.0</version>
+
+    <actionClassName>de.hybris.platform.testingbackoffice.actions.TestAction</actionClassName>
+
+    <sockets>
+        <output id="typeCode" type="java.lang.String"/>
+    </sockets>
+
+    <!--    <sockets>-->
+    <!--        <output id="wizardContext" type="java.util.Map"/>-->
+    <!--    </sockets>-->
+
+    <iconUri>icons/world.png</iconUri>
+    <iconDisabledUri>icons/world_disabled.png</iconDisabledUri>
+    <iconHoverUri>icons/world_hover.png</iconHoverUri>
+
+</action-definition>

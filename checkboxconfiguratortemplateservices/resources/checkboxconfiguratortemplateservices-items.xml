@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<!-- Add a new element to ConfiguratorType enum; If an Enum type is dynamic then values can be added at the run time -->
+	<enumtypes>
+		<enumtype code="ConfiguratorType" generate="true" autocreate="false" dynamic="true">
+			<value code="CHECKBOX" />
+		</enumtype>
+	</enumtypes>
+
+	<!-- add custom types -->
+	<itemtypes>
+		<!--
+			Add a custom configurator settings type CheckboxConfiguratorSettings to be related to a product.
+			Add specific attributes for your configuration
+		-->
+		<itemtype code="CheckboxConfiguratorSettings" extends="AbstractConfiguratorSetting"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.checkboxconfiguratortemplateservices.jalo.CheckboxConfiguratorSettings">
+			<description>Checkbox Configurator that contains additional attributes which specify the configuration.</description>
+			<attributes>
+				<!-- configurationLabel to shortly describe what this checkbox configures -->
+				<attribute qualifier="configurationLabel" type="java.lang.String">
+					<description>Label of the checkbox element</description>
+					<persistence type="property"/>
+				</attribute>
+				<!-- checked indicates a default value of the configurator -->
+				<attribute qualifier="checked" type="boolean">
+					<description>Indicates the default value of the checkbox (is it checked or not) </description>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!--
+			Add a custom product info type CheckboxConfiguredProductInfo to be related to an order entry .
+			Add specific attributes for your configuration to it
+		-->
+		<itemtype code="CheckboxConfiguredProductInfo" extends="AbstractOrderEntryProductInfo"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.checkboxconfiguratortemplateservices.jalo.CheckboxConfiguratorOrderedProductInfo">
+			<description>Order entry side of CheckboxSettings</description>
+			<attributes>
+				<!-- configurationLabel to shortly describe what this checkbox configures -->
+				<attribute qualifier="configurationLabel" type="java.lang.String">
+					<description>Label</description>
+					<persistence type="property"/>
+				</attribute>
+				<!-- checked indicates a default value of the configurator -->
+				<attribute qualifier="checked" type="boolean">
+					<description>Indicates the configured value of the checkbox that will be saved along with the order entry</description>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<!-- test ************************************************************************************************* -->
+		<!-- without extending any existing item type -->
+		<itemtype code="ProductInfo"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.checkboxconfiguratortemplateservices.jalo.ProductInfo">
+			<deployment table="ProductInfo" typecode="11132" />
+			<attributes>
+				<attribute qualifier="id" type="java.lang.Integer">
+					<description>Product Id Info</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="name" type="java.lang.String">
+					<description>Product Name Info</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<!-- without extending any existing item type -->
+		<itemtype code="DropdownConfiguratorSettings" extends="AbstractConfiguratorSetting"
+				  autocreate="true" generate="true"
+				  jaloclass="de.hybris.platform.checkboxconfiguratortemplateservices.jalo.DropdownConfiguratorSettings">
+			<description>Base product extension that contains additional attributes.</description>
+			<attributes>
+				<attribute qualifier="configurationLabel" type="java.lang.String">
+					<description>Label of dropdown property</description>
+					<modifiers />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="checked" type="boolean">
+					<description>Indicates the default value of the checkbox (is it checked or not) </description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<!-- test ************************************************************************************************* -->
+	</itemtypes>
+</items>

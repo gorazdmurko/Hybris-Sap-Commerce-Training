@@ -1,0 +1,41 @@
+
+## ============================= macros start =============================
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$wideContent=CMSImageComponent,BannerComponent
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+$emailPackageName=$config-emailContextPackageName
+$emailResource=$config-emailResourceValue
+
+$lang=en
+## ============================== macros end ==============================
+
+
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+                              ;hybrisTubeEmailBody;de.hybris.platform.testingfacade.processes.email.context.HybrisTubeEmailContext
+                              ;hybrisTubeEmailSubject;de.hybris.platform.testingfacade.processes.email.context.HybrisTubeEmailContext
+
+# ==========================================================================================================
+$lang=en
+$myEmailResourcePath1=jar:de.hybris.platform.yacceleratorcore.setup.CoreSystemSetup&/testingcore/import/email/
+$myEmailResourcepath2=jar:de.hybris.platform.testingcore.setup.TestingcoreSystemSetup.java&/testingcore/import//email/
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ;hybrisTubeEmailBody;"Hybris Tube Email Body";$myEmailResourcePath1/email-hybrisTubeEmailBody.vm
+                       ;hybrisTubeEmailSubject;"Hybris Tube Email Subject";$myEmailResourcePath1/email-hybrisTubeSubject.vm
+# ==========================================================================================================
+
+
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+                               ;;HybrisTubeEmailTemplate;Hybris Tube Email Template;true;HybrisTubeEmail;hybrisTubeEmailSubject;hybrisTubeEmailBody;EmailPage
+
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];fromEmail[lang=en];fromName[lang=en]
+                       ;;HybrisTubeEmail; Hybris Tube Email;HybrisTubeEmailTemplate;true;;gorazd.murko.mb@hybris.com;Hybris Tube Zenlab Training
+# in my case
+# FROM: gorazd.murko.si@hybris.com
+#   TO: logged in user
+# [GenerateEmailAction] Email message generated
+# [DefaultEmailService] Sending Email [..] To [nitin2813@yahoo.com] From [nitin.hybris@gmail.com] Subject [Congratulations, you are eligible..]

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="testingbackofficeService" class="de.hybris.platform.testingbackoffice.services.TestingbackofficeService" />
+
+	<bean id="testingbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator" scope="singleton" init-method="init" lazy-init="false">
+  		<property name="location" value="/testingbackoffice-backoffice-labels/"/>
+  		<property name="name" value="labels"/>
+  	</bean>
+
+
+	<!-- custom notification service -->
+	<alias name="customNotificationService" alias="customNotificationService" />
+	<bean name="customNotificationService" class="de.hybris.platform.testingbackoffice.services.CustomNotificationServices" />
+
+	<!-- FILE OPEN WIZARD FORM -->
+	<alias name="defaultFileImportWizardForm" alias="fileImportWizardForm"/>
+	<bean id="defaultFileImportWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.FileImportWizardForm" scope="prototype"/>
+
+	<!-- MULTIPLE SELECT WIZARD FORM -->
+	<alias name="defaultMultipleSelectWizardForm" alias="multipleSelectWizardForm" />
+	<bean id="defaultMultipleSelectWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.MultipleProductsSelectWizardForm" />
+
+	<!-- validation -->
+	<alias name="defaultFileImportValidationResultRenderer" alias="fileImportValidationResultRenderer" />
+	<bean id="defaultFileImportValidationResultRenderer" class="de.hybris.platform.testingbackoffice.imp.FileValidationResultRenderer">
+		<property name="notificationService" ref="customNotificationService" />
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+
+	<!-- import HANDLER -->
+	<alias name="defaultFileImportHandler" alias="fileImportHandler"/>
+	<bean name="defaultFileImportHandler" class="de.hybris.platform.testingbackoffice.imp.FileImportHandler">
+		<property name="notificationService" ref="customNotificationService"/>
+		<property name="mimeService" ref="mimeService" />
+		<property name="cockpitProperties" ref="cockpitProperties" />
+		<property name="parser" ref="staxParser" />
+		<property name="modelService" ref="modelService" />
+		<property name="productService" ref="defaultProductService" />
+	</bean>
+
+	<alias name="defaultStaxParser" alias="staxParser" />
+	<bean id="defaultStaxParser" class="de.hybris.platform.testingfacade.parser.impl.StaxParser" />
+
+	<!-- multi select HANDLER -->
+	<alias name="defaultMultiselectHandler" alias="multiselectHandler" />
+	<bean id="defaultMultiselectHandler" class="de.hybris.platform.testingbackoffice.imp.MultiselectHandler" />
+
+
+	<!-- EXPORT WIZARD FORM -->
+	<alias name="defaultExportWizardForm" alias="exportWizardForm" />
+	<bean id="defaultExportWizardForm" class="de.hybris.platform.testingbackoffice.imp.wizard.ExportWizardForm" />
+	<!-- EXPORT HANDLER -->
+	<alias name="defaultExportHandler" alias="exportHandler" />
+	<bean id="defaultExportHandler" class="de.hybris.platform.testingbackoffice.imp.ExportHandler" />
+
+
+	<!-- custom mySearch widget service -->
+	<bean id="mySearchService" class="de.hybris.platform.testingbackoffice.widgets.MySearchService" />
+
+	<!-- custom myInput widget service -->
+	<bean id="myInputService" class="de.hybris.platform.testingbackoffice.widgets.MyInputService" />
+</beans>
