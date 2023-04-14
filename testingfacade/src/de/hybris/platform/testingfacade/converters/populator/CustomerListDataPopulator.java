@@ -20,17 +20,17 @@ public class CustomerListDataPopulator  implements Populator<List<CustomerModel>
     public void populate(List<CustomerModel> source, CustomerListData target) throws ConversionException {
         // super.populate(source, target);
 
-        List<CustomerData> dataList = new ArrayList<>();
+//        List<CustomerData> dataList = new ArrayList<>();
+//
+//        for (CustomerModel model : source) {
+//            CustomerData data = new CustomerData();
+//            customerDataPopulator.populate(model, data);    // populates from model to data
+//            dataList.add(data);                             // adds data to list
+//        }
+//
+//        target.setCustomerList(dataList);
 
-        for (CustomerModel model : source) {
-            CustomerData data = new CustomerData();
-            customerDataPopulator.populate(model, data);    // populates from model to data
-            dataList.add(data);                             // adds data to list
-        }
-
-        target.setCustomerList(dataList);
-
-        // target.setCustomerList(new ArrayList<CustomerData>(Converters.convertAll(source, getConverter())));   ?!
+        target.setCustomerList(new ArrayList<CustomerData>(Converters.convertAll(source, getConverter())));
     }
 
     public CustomerDataPopulator getCustomerDataPopulator() {

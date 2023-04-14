@@ -14,6 +14,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.constants.WebConstants;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.ConsentForm;
+import de.hybris.platform.basecommerce.model.site.BaseSiteModel;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.AbstractPageModel;
 
@@ -21,6 +22,10 @@ import de.hybris.platform.commercefacades.consent.ConsentFacade;
 import de.hybris.platform.commercefacades.consent.data.ConsentTemplateData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commerceservices.consent.CommerceConsentService;
+import de.hybris.platform.commerceservices.consent.dao.ConsentDao;
+import de.hybris.platform.commerceservices.event.AbstractCommerceUserEvent;
+import de.hybris.platform.commerceservices.event.ConsentGivenEvent;
+import de.hybris.platform.commerceservices.model.consent.ConsentModel;
 import de.hybris.platform.commerceservices.model.consent.ConsentTemplateModel;
 import de.hybris.platform.core.model.user.CustomerModel;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
@@ -83,6 +88,8 @@ public class HomePageController extends AbstractPageController
 	@Resource(name = "eventService")
 	private EventService eventService;
 
+	private ConsentDao consentDao;
+
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(@RequestParam(value = WebConstants.CLOSE_ACCOUNT, defaultValue = "false") final boolean closeAcc,
@@ -140,6 +147,7 @@ public class HomePageController extends AbstractPageController
 		// GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.ERROR_MESSAGES_HOLDER, "text.account.consent.template.notFound", null);
 
 		CustomerModel customerModel = sessionService.getAttribute("user");
+		ConsentTemplateModel templateModel = new ConsentTemplateModel();
 
 		try {
 			List<ConsentTemplateModel> consentTemplateModelList = consentService.getConsentTemplates(baseSiteService.getCurrentBaseSite());
@@ -156,7 +164,7 @@ public class HomePageController extends AbstractPageController
 				throw new IllegalStateException();
 			}
 
-			ConsentTemplateModel templateModel = modelList.get(0);
+			templateModel = modelList.get(0);
 
 			ConsentTemplateData templateData = dataList.get(0);
 			LOG.info("Template data: " + templateData);
@@ -168,9 +176,10 @@ public class HomePageController extends AbstractPageController
 			LOG.error(e);
 		}
 
-		if (userFacade.isAnonymousUser()) {
+		ConsentModel consent = consentDao.findConsentByCustomerAndConsentTemplate(customerModel, templateModel);
 
-			this.eventService.publishEvent(initializeConsentEvent(new ConsentEmailEvent("consents-confirm@hybris.com/site=?electronics"), "consents-confirm@hybris.com/site=?electronics"));
+		if (userFacade.isAnonymousUser()) {
+			this.eventService.publishEvent(initializeConsentEvent(new ConsentEmailEvent("consents-confirm@hybris.com/site=?electronics"), "consents-confirm@hybris.com/site=?electronics", consent));
 
 			GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.CONF_MESSAGES_HOLDER,
 					"Thank you for subscribing. You should confirm email that was currently sent to your email box.", null);
@@ -178,7 +187,7 @@ public class HomePageController extends AbstractPageController
 			return REDIRECT_TO_CONSENT;
 		}
 
-		this.eventService.publishEvent(initializeConsentEvent(new ConsentEmailEvent("consents-confirm@hybris.com/site=?electronics"), "consents-confirm@hybris.com/site=?electronics"));
+		this.eventService.publishEvent(initializeConsentEvent(new ConsentEmailEvent("consents-confirm@hybris.com/site=?electronics"), "consents-confirm@hybris.com/site=?electronics", consent));
 
 		GlobalMessages.addFlashMessage(redirectModel, GlobalMessages.INFO_MESSAGES_HOLDER,
 				"Thank you for subscription. You can manage your consents in Consent Manager section of your account.", null);
@@ -186,8 +195,38 @@ public class HomePageController extends AbstractPageController
 		return REDIRECT_TO_CONSENT;
 	}
 
-	private AbstractEvent initializeConsentEvent(final ConsentEmailEvent event, String confirmationUrl) {
+	private AbstractCommerceUserEvent initializeConsentEvent(final ConsentEmailEvent event, String confirmationUrl, ConsentModel consent) {
+		CustomerModel customerModel = consent.getCustomer();
+
+		event.setConsent(consent);
+		event.setToken(customerModel.getToken());
 		event.setConsentConfirmationURL(confirmationUrl);
+
+
+		// see GORENJE initializeConfirmationvent() DefaultGGSubscriberService.java
+//		event.setBaseStore(getBaseStoreService().getCurrentBaseStore());
+//		BaseSiteModel site = getBaseSiteService().getCurrentBaseSite();
+//		if (siteId != null) {
+//			site = baseSiteService.getBaseSiteForUID(siteId);
+//		}
+//		event.setSite(site);
+//
+//		event.setGgSubscriberModel(subscriber);
+//
+//		GGBaseSiteSubscriptionModel baseSiteSubscriptionModel = null;
+//		if(subscriber.getBaseSiteSubscription()!=null && !subscriber.getBaseSiteSubscription().isEmpty()){
+//			for(GGBaseSiteSubscriptionModel sub : subscriber.getBaseSiteSubscription()){
+//				if(sub.getBaseSite()!=null && sub.getBaseSite().equals(site)){
+//					baseSiteSubscriptionModel = sub;
+//					break;
+//				}
+//			}
+//		}
+//		event.setToken(baseSiteSubscriptionModel!=null ? baseSiteSubscriptionModel.getValidationToken() : "");
+//		event.setLanguage(getCommonI18NService().getCurrentLanguage());
+//		event.setCurrency(getCommonI18NService().getCurrentCurrency());
+//		return event;
+
 		return event;
 	}
 }

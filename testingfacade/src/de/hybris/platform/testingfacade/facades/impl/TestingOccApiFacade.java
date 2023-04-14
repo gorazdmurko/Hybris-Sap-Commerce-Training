@@ -47,8 +47,8 @@ public class TestingOccApiFacade implements ITestingOccApiFacade {
     // 3. RETURNS A POPULATED LIST OF ALL CUSTOMERS
     @Override
     public CustomerListData populateCustomerListData() {
-        List<CustomerModel> modelList = getService().findAllCustomers();
 
+        List<CustomerModel> modelList = getService().findAllCustomers();
         CustomerListData dataList = new CustomerListData();
         listPopulator.populate(modelList,  dataList);
 

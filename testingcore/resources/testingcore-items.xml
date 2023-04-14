@@ -133,6 +133,10 @@
 					<description>Holds URL address for consent confirmation</description>
 					<persistence type="property" />
 				</attribute>
+				<attribute qualifier="consent" type="Consent">
+					<description>Holds consent information</description>
+					<persistence type="property" />
+				</attribute>
 			</attributes>
 		</itemtype>
 

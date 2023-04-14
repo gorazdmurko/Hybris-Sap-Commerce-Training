@@ -64,7 +64,8 @@
     <alias name="defaultCustomerListDataPopulator" alias="customerListDataPopulator" />
     <bean id="defaultCustomerListDataPopulator" class="de.hybris.platform.testingfacade.converters.populator.CustomerListDataPopulator">
         <property name="customerDataPopulator" ref="customerDataPopulator" />
-        <!-- <property name="service" ref="testingWebServices" /> -->
+        <property name="converter" ref="customerDataConverter" />
+         <!-- <property name="service" ref="testingWebServices" /> -->
     </bean>
 
     <!-- 4. populates CustomerListData by names -->
@@ -121,6 +122,7 @@
     <bean id="consentEmailContext" class="de.hybris.platform.testingfacade.processes.email.context.ConsentEmailContext"
           parent="abstractEmailContext" scope="prototype" >
         <property name="customerConverter" ref="customerConverter"/>
+<!--        <property name="subscriberConverter" ref="subscriberCustomerDataConverter"/>-->
     </bean>
 
 

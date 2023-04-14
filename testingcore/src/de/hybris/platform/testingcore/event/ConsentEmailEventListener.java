@@ -16,11 +16,26 @@ public class ConsentEmailEventListener extends AbstractAcceleratorSiteEventListe
     @Override
     protected void onSiteEvent(ConsentEmailEvent event) {
 
-        final ConsentEmailProcessModel consentEmailProcessModel = getBusinessProcessService().createProcess("consentEmail-" + event.getConsentConfirmationURL() + "-" + System.currentTimeMillis(), "consentEmailProcess");
+        // MODEL
+        final ConsentEmailProcessModel processModel = getBusinessProcessService().createProcess("consentEmail-" + event.getConsentConfirmationURL() + "-" + System.currentTimeMillis(), "consentEmailProcess");
+
+        processModel.setToken(event.getToken());
+        // processModel.setConsent(event.getConsent());
+        processModel.setConsentConfirmationURL(event.getConsentConfirmationURL());
+        processModel.setStore(event.getBaseStore());
+        processModel.setLanguage(event.getLanguage());
+
+//        if (event.getCustomer() == null) {
+//            emailConfirmationProcessModel.setSubscriber(event.getGgSubscriberModel());
+//        } else {
+//            emailConfirmationProcessModel.setCustomer(event.getCustomer());
+//        }
+
+        processModel.setCustomer(event.getCustomer());
 
         // START PROCESS
-        getModelService().save(consentEmailProcessModel);
-        getBusinessProcessService().startProcess(consentEmailProcessModel);     // it goes to the process start="generateConsentEmail"
+        getModelService().save(processModel);
+        getBusinessProcessService().startProcess(processModel);     // it goes to the process start="generateConsentEmail"
                                                                                 // which calls GenerateEmailAction
     }
 
